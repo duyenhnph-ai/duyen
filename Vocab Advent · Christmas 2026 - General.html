@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vocab Advent · Christmas 2026 - General</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{--bg:#faf7f2;--ink:#1f2a24;--mut:#6b756e;--grn:#1f5c46;--red:#b53a3a;--card:#fff;--line:#e6e0d4;--ok:#2e7d52;--okbg:#e6f3ec;--badbg:#f8e5e5;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a16;--ink:#eef2ee;--mut:#9aa89f;--grn:#6fbf9a;--red:#e07a7a;--card:#1b2621;--line:#2b3a33;--ok:#7fd3a3;--okbg:#1d3a2b;--badbg:#3d2323;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121a16;--ink:#eef2ee;--mut:#9aa89f;--grn:#6fbf9a;--red:#e07a7a;--card:#1b2621;--line:#2b3a33;--ok:#7fd3a3;--okbg:#1d3a2b;--badbg:#3d2323;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.snow{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.snow i{position:absolute;top:-24px;font-style:normal;line-height:1;color:var(--grn);opacity:.22;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(105vh) translateX(30px)}}
+@media (prefers-reduced-motion:reduce){.snow{display:none}}
+main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:28px 20px 56px}
+header{text-align:center;margin-bottom:28px}
+.tag{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--red)}
+h1{font-size:30px;font-weight:600;margin:6px 0 4px;letter-spacing:-.02em}
+h1 span{color:var(--grn)}
+.sub{color:var(--mut);margin:0}
+.drop{display:block;border:1.5px dashed var(--line);background:var(--card);border-radius:16px;padding:36px 20px;text-align:center;cursor:pointer;transition:.2s}
+.drop:hover,.drop.on{border-color:var(--grn);transform:translateY(-1px)}
+.drop b{display:block;font-size:18px;margin:6px 0 2px}
+.drop small{color:var(--mut)}
+.ico{font-size:30px}
+.fmt{margin:18px 0;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:14px;color:var(--mut)}
+.fmt table{border-collapse:collapse;width:100%;margin-top:8px;font-size:13px}
+.fmt td,.fmt th{border:1px solid var(--line);padding:5px 8px;text-align:left}
+.fmt th{color:var(--grn);font-weight:600}
+button{font:inherit;cursor:pointer}
+.btn{border:0;border-radius:999px;padding:11px 22px;background:var(--grn);color:var(--bg);font-weight:600;transition:.15s}
+.btn:hover{opacity:.88}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--grn)}
+.btn:focus-visible,.opt:focus-visible,.fc:focus-visible,input:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.center{text-align:center}.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.menu{display:grid;gap:12px}
+.mode{display:flex;gap:14px;align-items:center;text-align:left;width:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;color:var(--ink);transition:.15s}
+.mode:hover:not(:disabled){border-color:var(--grn);transform:translateY(-1px)}
+.mode:disabled{opacity:.45;cursor:not-allowed}
+.mode .e{font-size:24px}.mode b{display:block}.mode span{color:var(--mut);font-size:14px}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--mut);font-size:14px;margin-bottom:14px}
+.bar{height:4px;background:var(--line);border-radius:4px;margin-bottom:22px;overflow:hidden}
+.bar div{height:100%;background:var(--red);transition:width .3s}
+.fc{perspective:900px;width:100%;height:340px;background:none;border:0;padding:0}
+.fc .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fc.flip .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;background:var(--card);border:1px solid var(--line);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;overflow:auto}
+.face.back{transform:rotateY(180deg)}
+.face .w{font-size:34px;font-weight:600;color:var(--grn)}
+.face .hint{color:var(--mut);font-size:13px;margin-top:10px}
+.face em{color:var(--mut);margin-top:12px;font-size:15px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:16px}
+.q small{color:var(--red);letter-spacing:.12em;text-transform:uppercase;font-size:11px}
+.q p{margin:8px 0 0;font-size:20px;line-height:1.45}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;color:var(--ink);transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--grn)}
+.opt.ok{background:var(--okbg);border-color:var(--ok)}
+.opt.bad{background:var(--badbg);border-color:var(--red)}
+input.t{width:100%;font:inherit;font-size:18px;padding:13px 16px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.fb{min-height:28px;margin:14px 0 0;font-weight:600;text-align:center}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--red)}
+.score{font-size:56px;font-weight:600;color:var(--grn);margin:8px 0}
+.back{background:none;border:0;color:var(--mut);padding:0}.back:hover{color:var(--ink)}
+.foot{text-align:center;color:var(--mut);font-size:12px;margin-top:36px}
+.err{color:var(--red);text-align:center;margin-top:12px;font-size:14px}
+.meta{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:8px;color:var(--mut);flex-wrap:wrap}
+.pos{font-size:12px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--red);color:var(--red);border-radius:99px;padding:1px 10px}
+.ipa{font-family:ui-monospace,Menlo,monospace;font-size:16px}
+.spk{margin-top:14px;background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:99px;padding:6px 14px;font-size:14px}.spk:hover{border-color:var(--grn)}
+mark{background:transparent;color:var(--red);font-weight:600;border-bottom:2px solid var(--red)}
+.lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:14px 0 4px}
+body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:80px;background:radial-gradient(ellipse at 50% 100%,var(--line),transparent 70%);pointer-events:none;z-index:0}
+.cane{height:6px;border-radius:6px;margin:20px auto 0;max-width:220px;background:repeating-linear-gradient(135deg,var(--red) 0 8px,var(--card) 8px 16px);border:1px solid var(--line)}
+.bar div{background:repeating-linear-gradient(135deg,var(--red) 0 10px,var(--card) 10px 20px)!important}
+.mode:nth-child(odd){border-left:4px solid var(--red)}.mode:nth-child(even){border-left:4px solid var(--grn)}
+.face{border-top:4px solid var(--red)}.face.back{border-top-color:var(--grn)}
+.drop{border-style:dashed;border-color:var(--red);background:linear-gradient(var(--card),var(--card)) padding-box}
+.drop:hover,.drop.on{border-color:var(--grn)}
+.trees{font-size:20px;letter-spacing:.45em;margin-bottom:6px}
+h1 .st{display:inline-block;animation:tw 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){h1 .st{animation:none}}
+.fly{position:fixed;top:46px;left:0;font-size:26px;white-space:nowrap;pointer-events:none;z-index:2;opacity:.9;animation:fly 32s linear infinite;transform:translateX(105vw)}
+@keyframes fly{from{transform:translateX(105vw) translateY(0)}50%{transform:translateX(40vw) translateY(-10px)}to{transform:translateX(-220px) translateY(0)}}
+.bn{display:inline-block;animation:bn 2.2s ease-in-out infinite}@keyframes bn{50%{transform:translateY(-4px) rotate(-6deg)}}
+.trees{font-size:28px;letter-spacing:.3em}
+.mt{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:5;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:8px 14px;font-size:13px}.mt:hover{border-color:var(--grn)}
+@media (prefers-reduced-motion:reduce){.fly{display:none}.bn{animation:none}}
+.lights{display:flex;justify-content:space-around;position:relative;z-index:1;margin:0 -12px 8px;height:34px;overflow:hidden}
+.lights::before{content:"";position:absolute;left:0;right:0;top:-6px;height:20px;border-bottom:2px solid var(--line);border-radius:0 0 50% 50%/0 0 100% 100%}
+.lights i{width:10px;height:15px;border-radius:50% 50% 50% 50%/35% 35% 65% 65%;margin-top:12px;animation:tw 2.4s ease-in-out infinite}
+.lights i:nth-child(4n+1){background:var(--red)}.lights i:nth-child(4n+2){background:#d9a441}.lights i:nth-child(4n+3){background:var(--grn)}.lights i:nth-child(4n){background:#e9e4d6}
+@keyframes tw{50%{opacity:.3}}
+.count{display:inline-block;margin-top:12px;font-size:13px;color:var(--grn);border:1px solid var(--line);background:var(--card);border-radius:99px;padding:3px 14px}
+@media (prefers-reduced-motion:reduce){.lights i{animation:none}}
+.tb{border-collapse:collapse;width:100%;font-size:13px;text-align:left}.tb th,.tb td{border-bottom:1px solid var(--line);padding:8px 8px;white-space:nowrap}.tb th{color:var(--grn);font-weight:600}
+.word{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin:8px 0 18px}
+.ch{min-width:30px;height:46px;line-height:46px;text-align:center;font-size:26px;font-weight:600;color:var(--grn)}
+.sp{width:16px}
+.ml{width:38px;height:46px;text-align:center;font:inherit;font-size:24px;font-weight:600;border:0;border-bottom:2px solid var(--red);background:var(--card);color:var(--ink);border-radius:8px 8px 0 0;padding:0}
+.ml.ok{background:var(--okbg);border-color:var(--ok)}.ml.bad{background:var(--badbg)}
+[hidden]{display:none!important}
+</style></head><body>
+<div class="snow" id="snow" aria-hidden="true"></div>
+<div class="fly" aria-hidden="true">🦌🦌🛷🎅</div>
+<main>
+<div class="lights" id="lt" aria-hidden="true"></div>
+<header><div class="tag">❄ Merry Christmas 2026 ❄</div><h1><span class="st">🎄</span> Vocab <span>Advent</span> <span class="bn">🎅</span></h1><p class="sub">Drop your Excel file. Start practising in seconds.</p><div class="count" id="cd"></div><div class="cane" aria-hidden="true"></div></header>
+<div id="app"></div>
+<div class="foot"><div class="trees" aria-hidden="true">🎄 🎁 🎅 🦌 🎁 🎄</div>Happy holidays — keep learning, one word at a time 🎄</div>
+</main>
+<script>
+const $=s=>document.querySelector(s),app=$('#app');
+let words=[];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const norm=s=>String(s).trim().toLowerCase().replace(/\s+/g,' ');
+function toWords(rows){
+ const h=rows[0].map(norm);
+ let iw=h.findIndex(x=>/word|term|vocab/.test(x)),id=h.findIndex(x=>/defin|mean/.test(x)),ie=h.findIndex(x=>/exam|sent/.test(x)),ip=h.findIndex(x=>/type|pos|part|speech|class/.test(x)),ir=h.findIndex(x=>/pron|ipa|phon/.test(x)),iv=h.findIndex(x=>/viet|translat/.test(x));
+ let start=1;
+ if(iw<0&&id<0){iw=0;id=1;ie=2;ip=ir=iv=-1;start=0}
+ else{if(iw<0)iw=0;if(id<0)id=iw===1?0:1;if(ie<0)ie=[0,1,2,3,4].find(k=>![iw,id,ip,ir,iv].includes(k)&&k<h.length)}
+ return rows.slice(start).map(r=>({w:String(r[iw]||'').trim(),d:String(r[id]||'').trim(),e:String(r[ie]??'').trim(),p:String(r[ip]??'').trim(),ipa:String(r[ir]??'').trim(),vi:String(r[iv]??'').trim()})).filter(x=>x.w&&x.d).map(x=>({...x,b:blank(x)}));
+}
+function blank(x){
+ if(!x.e)return '';
+ const stem=x.w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+ const re=new RegExp('\\b'+stem+'\\w*','i');
+ return re.test(x.e)?x.e.replace(re,'_____'):'';
+}
+function load(file){
+ const r=new FileReader();
+ r.onload=e=>{try{
+  const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array'});
+  const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''}).filter(r=>r.some(c=>String(c).trim()));
+  words=toWords(rows);
+  if(words.length<2)throw 0;
+  menu();
+ }catch(_){$('#err').textContent='We couldn’t read any words. Please check the file format below.'}};
+ r.readAsArrayBuffer(file);
+}
+let cur='',db=null,uid=null,who=null,store=null,isT=false,tmr;
+const MODES=['Match the definition','Type the word','Missing letters','Complete the sentence'];
+const rec=()=>{if(!store||!who)return null;const k=who+(list?' · '+list:'');return store.students[k]=store.students[k]||{fc:{seen:[]},res:{}}};
+function save(now){clearTimeout(tmr);const go=async()=>{if(!db||!uid||!store)return;const r=rec();if(r)r.t=Date.now();try{await db.doc('progress/'+uid).set(store)}catch(_){}};now?go():tmr=setTimeout(go,1500)}
+function logFc(n,miss){const r=rec();if(!r)return;r.fc.known=n-miss.length;r.fc.review=miss.map(x=>x.w);r.fc.total=words.length;r.fc.rounds=(r.fc.rounds||0)+1;save(1)}
+function logRes(s,n,miss){const r=rec();if(!r||cur==='Flashcards')return;const x=r.res[cur]=r.res[cur]||{attempts:0,best:0};x.attempts++;x.last=Math.round(s/n*100);x.best=Math.max(x.best,x.last);x.wrong=miss.map(w=>w.w).slice(0,60);x.t=Date.now();save(1)}
+function ask(next){
+ let last='';try{last=localStorage.getItem('vname')||''}catch(_){}
+ app.innerHTML=`<div class="center"><div class="ico">\u270f\ufe0f</div><h2 style="margin:4px 0">What\u2019s your name?</h2><p class="sub">Your teacher will see your progress.</p><div style="max-width:320px;margin:18px auto 0"><input class="t" id="nm" maxlength="40" placeholder="Full name" autocomplete="name" value="${esc(last)}"></div><div class="fb" id="fb" role="alert"></div><div class="row"><button class="btn ghost" id="b">Back</button><button class="btn" id="go">Start</button></div></div>`;
+ const go=async()=>{const v=$('#nm').value.trim().replace(/\s+/g,' ');if(!v){$('#fb').className='fb bad';$('#fb').textContent='Please enter your name.';return}
+  who=v;try{localStorage.setItem('vname',v)}catch(_){}
+  store={students:{}};
+  if(db&&uid){try{const sn=await db.doc('progress/'+uid).get();if(sn.exists&&sn.data().students)store=sn.data()}catch(_){}}
+  rec();next()};
+ $('#go').onclick=go;$('#nm').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();go()}};$('#b').onclick=menu;$('#nm').focus();
+}
+function dash(){
+ app.innerHTML='<div class="top"><button class="back" id="m">\u2190 Menu</button><span>Teacher dashboard</span></div><div id="dt" class="sub center">Loading\u2026</div>';
+ let un=null;$('#m').onclick=()=>{un&&un();menu()};
+ un=db.collection('progress').onSnapshot(snap=>{
+  const rows=[];snap.docs.forEach(d=>{const st=(d.data()||{}).students||{};for(const k in st)rows.push([k,st[k]])});
+  rows.sort((a,b)=>(b[1].t||0)-(a[1].t||0));
+  $('#dt').className='';
+  $('#dt').innerHTML=rows.length?`<div style="overflow-x:auto"><table class="tb"><tr><th>Student</th><th>Flashcards (flipped)</th><th>Match</th><th>Type</th><th>Missing letters</th><th>Sentences</th><th>Last active</th></tr>${rows.map(([k,x])=>{const fc=x.fc||{seen:[]};return `<tr><td><b>${esc(k)}</b></td><td>${fc.seen.length}/${fc.total||words.length}${fc.known!=null?` \u00b7 ${fc.known} known`:''}</td>${MODES.map(m=>{const r=(x.res||{})[m];return `<td title="${r?esc('Missed last time: '+(r.wrong||[]).join(', ')):''}">${r?`${r.best}% best \u00b7 ${r.last}% last (${r.attempts}\u00d7)`:'\u2014'}</td>`}).join('')}<td>${x.t?esc(new Date(x.t).toLocaleString()):'\u2014'}</td></tr>`}).join('')}</table></div><p class="sub" style="font-size:12px;margin-top:10px">Updates live. Hover a score to see the words missed last time.</p>`:'<p class="sub center">No student activity yet.</p>';
+ },()=>{$('#dt').textContent='Could not load progress.'});
+}
+const CANON='https://claude.ai/artifact/QDZihTDmJh9MVfViXqbZoN';
+const RES=['settings','sidebar','customize','upgrade','downloads'];
+const okSlug=s=>/^[a-z0-9-]{3,40}$/.test(s)&&!RES.includes(s)&&!s.startsWith('comment-');
+let list=okSlug(location.hash.slice(1))?location.hash.slice(1):'';
+const mkWords=a=>a.map(r=>{const x={w:r[0],p:r[1],ipa:r[2],d:r[3],e:r[4],vi:r[5]||''};x.b=blank(x);return x});
+async function fromList(s){
+ list=s;app.innerHTML='<div class="center"><p class="sub">Loading your list\u2026</p></div>';
+ try{const sn=await db.doc('lists/'+s).get();if(sn.exists&&sn.data().words){words=mkWords(sn.data().words);if(words.length){menu();return}}}catch(_){}
+ app.innerHTML='<div class="center"><div class="ico">\U0001F50E</div><p class="sub">We couldn\u2019t find this vocabulary list. Please check the link with your teacher.</p><div class="row"><button class="btn ghost" id="h">Upload a file instead</button></div></div>';$('#h').onclick=()=>{list='';home()};
+}
+function pubAsk(){
+ app.innerHTML=`<div class="center"><div class="ico">\U0001F4E4</div><h2 style="margin:4px 0">Name this list</h2><p class="sub">Each name gets its own link, e.g. grade6-unit1. Use letters, numbers and hyphens.</p><div style="max-width:320px;margin:18px auto 0"><input class="t" id="ln" maxlength="40" placeholder="grade6-unit1" value="${esc(list)}" autocapitalize="off" spellcheck="false"></div><div class="fb" id="fb" role="alert"></div><div class="row"><button class="btn ghost" id="b">Back</button><button class="btn" id="go">Publish</button></div></div>`;
+ const err=t=>{$('#fb').className='fb bad';$('#fb').textContent=t};
+ const go=async()=>{const s=$('#ln').value.trim().toLowerCase();if(!okSlug(s)){err('Use 3\u201340 letters, numbers or hyphens.');return}
+  const data={name:s,words:words.map(x=>[x.w,x.p||'',x.ipa||'',x.d,x.e||'',x.vi||'']),t:Date.now()};
+  if(JSON.stringify(data).length>240000){err('This list is too large to publish.');return}
+  $('#go').disabled=true;
+  try{await db.doc('lists/'+s).set(data);list=s;linkScreen(s)}catch(_){$('#go').disabled=false;err('Could not publish \u2014 try again.')}};
+ $('#go').onclick=go;$('#ln').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();go()}};$('#b').onclick=menu;$('#ln').focus();
+}
+function linkScreen(s){
+ const u=CANON+'#'+s;
+ app.innerHTML=`<div class="center"><div class="ico">\U0001F381</div><h2 style="margin:4px 0">Published! (${words.length} words)</h2><p class="sub">Send this link to your students:</p><div style="max-width:480px;margin:14px auto 0"><input class="t" id="lk" readonly value="${esc(u)}" style="font-size:14px"></div><div class="row"><button class="btn" id="cp">Copy link</button><button class="btn ghost" id="m">Back to menu</button></div><div class="fb" id="fb"></div></div>`;
+ $('#lk').onfocus=e=>e.target.select();$('#m').onclick=menu;
+ $('#cp').onclick=async()=>{try{await navigator.clipboard.writeText(u);$('#fb').className='fb ok';$('#fb').textContent='Copied!'}catch(_){$('#lk').select();$('#fb').className='fb';$('#fb').textContent='Press Ctrl+C (or \u2318C) to copy the link.'}};
+}
+async function lists(){
+ app.innerHTML='<div class="top"><button class="back" id="m">\u2190 Menu</button><span>My lists</span></div><div id="dt" class="sub center">Loading\u2026</div>';
+ $('#m').onclick=()=>words.length?menu():home();
+ try{
+  const sn=await db.collection('lists').get();
+  const rows=sn.docs.map(d=>{const x=d.data()||{};return{id:d.id,n:(x.words||[]).length,t:x.t||0}}).sort((a,b)=>b.t-a.t);
+  $('#dt').className='';
+  $('#dt').innerHTML=rows.length?rows.map(r=>`<div class="fmt" style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 10px"><div><b style="color:var(--ink)">${esc(r.id)}</b><br>${r.n} words</div><div class="row" style="margin:0"><button class="btn ghost" data-c="${esc(r.id)}">Copy link</button><button class="btn ghost" data-d="${esc(r.id)}">Delete</button></div></div>`).join(''):'<p class="sub center">No lists yet.</p>';
+  app.querySelectorAll('[data-c]').forEach(b=>b.onclick=async()=>{const u=CANON+'#'+b.dataset.c;try{await navigator.clipboard.writeText(u);b.textContent='Copied!'}catch(_){b.textContent=u}});
+  app.querySelectorAll('[data-d]').forEach(b=>b.onclick=async()=>{if(b.dataset.s!=='1'){b.dataset.s='1';b.textContent='Tap again to delete';return}try{await db.doc('lists/'+b.dataset.d).delete();lists()}catch(_){b.textContent='Failed'}});
+ }catch(_){$('#dt').textContent='Could not load lists.'}
+}
+function home(){
+ app.innerHTML=`<label class="drop" id="dz"><div class="ico">🎁</div><b>Drop your Excel file here</b><small>or click to browse · .xlsx, .xls, .csv</small><input type="file" id="f" accept=".xlsx,.xls,.csv" hidden></label>
+ <div class="err" id="err" role="alert"></div>
+ <div class="fmt"><b style="color:var(--ink)">Expected format</b> — first sheet, one word per row:
+ <div style="overflow-x:auto"><table><tr><th>Word</th><th>Part of speech</th><th>Pronunciation</th><th>Definition</th><th>Example</th></tr><tr><td>festive</td><td>adj</td><td>/ˈfestɪv/</td><td>happy and celebrating…</td><td>The town looks festive…</td></tr></table></div>
+ <div style="margin-top:8px">Only Word and Definition are required. Missing part of speech or pronunciation can be filled in automatically, and “complete the sentence” questions are written for you at B1+ level.</div></div>`;
+ const dz=$('#dz'),f=$('#f');
+ if(isT&&db){const r=document.createElement('div'),b=document.createElement('button');r.className='row';b.className='btn ghost';b.textContent='📚 My lists';b.onclick=lists;r.appendChild(b);app.appendChild(r)}
+ f.onchange=()=>f.files[0]&&load(f.files[0]);
+ ['dragover','dragenter'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.add('on')}));
+ ['dragleave','drop'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.remove('on')}));
+ dz.addEventListener('drop',e=>e.dataTransfer.files[0]&&load(e.dataTransfer.files[0]));
+}
+function menu(){
+ const ns=words.filter(w=>w.b).length;
+ const m=[['🎁','Flashcards','Flip cards and track what you know',()=>cards(),0],['🔔','Match the definition','Read a definition, choose the right word',()=>quiz('def',words),words.length<3],['⭐','Type the word','Read a definition, type the word',()=>quiz('type',words),0],['🎄','Missing letters','Fill in the gaps to complete each word',()=>missing(words),0],['🧦','Complete the sentence','Fresh B1+ sentences written for you — choose the missing word',()=>sentMode(),!(sample&&words.length>=4)&&ns<3]];
+ app.innerHTML=`<div class="top"><span><b style="color:var(--ink)">${words.length}</b> words loaded</span><button class="back" id="re">↺ Load another file</button></div><div class="menu">${m.map((x,i)=>`<button class="mode" data-i="${i}" ${x[4]?'disabled':''}><span class="e">${x[0]}</span><div><b>${x[1]}</b><span>${x[4]?'Not enough data for this mode':x[2]}</span></div></button>`).join('')}</div>`;
+ $('#re').onclick=home;
+ {const nt=document.createElement('div');nt.className='sub center';nt.style.cssText='margin-top:18px;font-size:13px';nt.textContent=db&&uid?'✓ Your progress is shared with your teacher':'Progress is not being recorded on this device';app.appendChild(nt);
+ if(isT&&db){const r=document.createElement('div'),b=document.createElement('button');r.className='row';b.className='btn ghost';b.textContent='👩‍🏫 Teacher dashboard';b.onclick=dash;r.appendChild(b);const p=document.createElement('button');p.className='btn ghost';p.textContent='📤 Publish this list for students';p.onclick=pubAsk;r.appendChild(p);const q=document.createElement('button');q.className='btn ghost';q.textContent='📚 My lists';q.onclick=lists;r.appendChild(q);app.appendChild(r)}}
+ if(sample&&words.some(w=>!w.p||!w.ipa)){const r=document.createElement('div'),b=document.createElement('button');r.className='row';b.className='btn ghost';b.textContent='✨ Auto-fill part of speech & pronunciation';b.onclick=async()=>{b.disabled=true;b.textContent='Filling in…';try{const need=words.filter(w=>!w.p||!w.ipa);for(let k=0;k<need.length;k+=40){const part=need.slice(k,k+40);b.textContent='Filling in… '+Math.min(k+40,need.length)+' / '+need.length;const res=await sample.json('For each English word give its part of speech (n., v., adj., adv., etc.) and its IPA pronunciation in slashes. Return ONLY a JSON array like [{"word":"","pos":"","ipa":""}]. Words: '+JSON.stringify(part.map(w=>w.w)));for(const o of Array.isArray(res)?res:[]){const w=words.find(x=>norm(x.w)===norm(o.word));if(w){w.p=w.p||o.pos||'';w.ipa=w.ipa||o.ipa||''}}}}catch(_){}menu()};r.appendChild(b);app.appendChild(r)}
+ app.querySelectorAll('.mode').forEach(b=>b.onclick=()=>{cur=m[b.dataset.i][1];ask(m[b.dataset.i][3])});
+}
+const say=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}catch(_){}};
+function cards(src){
+ let deck=shuf(src||words),i=0,flip=false,miss=[];const n=deck.length;
+ const hl=(e,w)=>esc(e).replace(new RegExp('\\b('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\w*)','ig'),'<mark>$1</mark>');
+ const show=()=>{
+  if(i>=n)return logFc(n,miss),done(n-miss.length,n,miss,'Deck complete!',miss.length?()=>cards(miss):0);
+  const w=deck[i],meta=`${w.p?`<span class="pos">${esc(w.p)}</span>`:''}${w.ipa?`<span class="ipa">${esc(w.ipa)}</span>`:''}`;
+  app.innerHTML=`<div class="top"><button class="back" id="m">← Menu</button><span>${i+1} / ${n} · <span style="color:var(--red)">${miss.length} to review</span></span></div><div class="bar"><div style="width:${i/n*100}%"></div></div>
+  <div class="fc ${flip?'flip':''}" id="fc" role="button" tabindex="0" aria-label="Flip card"><div class="in"><div class="face"><div class="w">${esc(w.w)}</div><div class="meta">${meta}</div><button class="spk" id="sp">🔊 Listen</button><div class="hint">Tap card to flip · Space</div></div><div class="face back"><div class="lbl" style="margin-top:0">Meaning</div><div style="font-size:20px">${esc(w.d)}</div>${w.vi?`<div class="lbl">Vietnamese</div><div style="font-size:20px;color:var(--grn);font-weight:600">${esc(w.vi)}</div>`:''}${w.e?`<div class="lbl">Example</div><em style="margin:0">“${hl(w.e,w.w)}”</em>`:''}</div></div></div>
+  <div class="row"><button class="btn ghost" id="no">Still learning</button><button class="btn" id="yes">I know it</button></div>`;
+  $('#m').onclick=menu;
+  $('#fc').onclick=()=>{flip=!flip;$('#fc').classList.toggle('flip',flip);if(flip){const r=rec();if(r&&!r.fc.seen.includes(w.w)){r.fc.seen.push(w.w);r.fc.total=words.length;save()}}};
+  $('#sp').onclick=e=>{e.stopPropagation();say(w.w)};
+  const nx=k=>{if(!k)miss.push(w);i++;flip=false;show()};
+  $('#yes').onclick=()=>nx(1);$('#no').onclick=()=>nx(0);
+ };
+ show();
+}
+function quiz(kind,pool,_){
+ const items=shuf(pool);let i=0,score=0,miss=[];
+ const label={def:'Which word matches?',type:'Type the word',sent:'Complete the sentence'}[kind];
+ const show=()=>{
+  if(i>=items.length)return done(score,items.length,miss,'Round complete!',miss.length?()=>quiz(kind,miss):0);
+  const w=items[i],txt=kind==='sent'?w.b:w.d;
+  let body;
+  if(kind==='type')body=`<input class="t" id="a" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Your answer"><div class="row"><button class="btn ghost" id="h">Hint</button><button class="btn" id="c">Check</button></div>`;
+  else{const o=shuf([w,...shuf(words.filter(x=>x.w!==w.w)).sort((a,b)=>(b.p===w.p)-(a.p===w.p)).slice(0,3)]);body=`<div class="opts">${o.map(x=>`<button class="opt" data-w="${esc(x.w)}">${esc(x.w)}</button>`).join('')}</div>`}
+  app.innerHTML=`<div class="top"><button class="back" id="m">← Menu</button><span>${i+1} / ${items.length} · Score ${score}</span></div><div class="bar"><div style="width:${i/items.length*100}%"></div></div>
+  <div class="q"><small>${label}</small><p>${esc(txt)}</p></div>${body}<div class="fb" id="fb" aria-live="polite"></div><div class="row" id="nx" hidden><button class="btn" id="n">Next →</button></div>`;
+  $('#m').onclick=menu;
+  let locked=false;
+  const fin=ok=>{locked=true;if(ok)score++;else miss.push(w);$('#nx').hidden=false;$('#n').focus();$('#n').onclick=()=>{i++;show()}};
+  if(kind==='type'){
+   const a=$('#a');a.focus();
+   $('#h').onclick=()=>{$('#fb').className='fb';$('#fb').textContent=`Starts with “${w.w[0]}” · ${w.w.length} letters`};
+   const chk=()=>{if(locked||!a.value.trim())return;const ok=norm(a.value)===norm(w.w);a.disabled=true;$('#c').disabled=$('#h').disabled=true;$('#fb').className='fb '+(ok?'ok':'bad');$('#fb').textContent=ok?'Correct! ✨':'The answer is: '+w.w;fin(ok)};
+   $('#c').onclick=chk;a.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();chk()}};
+  }else app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+   if(locked)return;const ok=b.dataset.w===w.w;
+   app.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.w===w.w)x.classList.add('ok')});
+   if(!ok)b.classList.add('bad');
+   $('#fb').className='fb '+(ok?'ok':'bad');$('#fb').textContent=ok?'Correct! ✨':'Not quite — the answer is '+w.w;if(w.why)$('#fb').textContent+=' — '+w.why;fin(ok);
+  });
+ };
+ show();
+}
+function missing(pool){
+ const items=shuf(pool);let i=0,score=0,miss=[];
+ const mk=w=>{const L=[...w.w].map((c,k)=>/[a-z]/i.test(c)&&k>0?k:-1).filter(k=>k>=0);const n=Math.min(L.length,Math.min(5,Math.max(2,Math.round(w.w.replace(/[^a-z]/gi,'').length/2.5))));return new Set(shuf(L).slice(0,n))};
+ const show=()=>{
+  if(i>=items.length)return done(score,items.length,miss,'Round complete!',miss.length?()=>missing(miss):0);
+  const w=items[i],B=mk(w);
+  const cells=[...w.w].map((c,k)=>B.has(k)?`<input class="ml" maxlength="1" data-c="${esc(c)}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Missing letter">`:c===' '?'<span class="sp"></span>':`<span class="ch">${esc(c)}</span>`).join('');
+  app.innerHTML=`<div class="top"><button class="back" id="m">← Menu</button><span>${i+1} / ${items.length} · Score ${score}</span></div><div class="bar"><div style="width:${i/items.length*100}%"></div></div>
+  <div class="q"><small>Fill in the missing letters</small><p>${esc(w.d)}</p>${w.p?`<div class="meta" style="justify-content:flex-start"><span class="pos">${esc(w.p)}</span></div>`:''}</div>
+  <div class="word">${cells}</div><div class="row" style="margin-top:0">${w.vi?'<button class="btn ghost" id="h">Hint</button>':''}<button class="btn" id="c">Check</button></div><div class="fb" id="fb" aria-live="polite"></div><div class="row" id="nx" hidden><button class="btn" id="n">Next →</button></div>`;
+  $('#m').onclick=menu;
+  const ins=[...app.querySelectorAll('.ml')];let locked=false;
+  const chk=()=>{if(locked)return;if(ins.some(x=>!x.value.trim())){$('#fb').className='fb';$('#fb').textContent='Please fill in every gap.';return}
+   locked=true;let ok=true;ins.forEach(x=>{const r=norm(x.value)===norm(x.dataset.c);x.classList.add(r?'ok':'bad');x.disabled=true;if(!r)ok=false});
+   if(ok)score++;else miss.push(w);$('#c').disabled=true;if($('#h'))$('#h').disabled=true;$('#fb').className='fb '+(ok?'ok':'bad');$('#fb').textContent=ok?'Correct! ✨':'The answer is: '+w.w;$('#nx').hidden=false;$('#n').focus();$('#n').onclick=()=>{i++;show()}};
+  ins.forEach((el,k)=>{el.oninput=()=>{if(el.value&&ins[k+1])ins[k+1].focus()};el.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();chk()}else if(e.key==='Backspace'&&!el.value&&ins[k-1])ins[k-1].focus()}});
+  if(ins[0])ins[0].focus();
+  $('#c').onclick=chk;
+  if($('#h'))$('#h').onclick=()=>{$('#fb').className='fb';$('#fb').textContent='Vietnamese: '+w.vi};
+ };
+ show();
+}
+function done(s,n,miss,title,again){logRes(s,n,miss);
+ const pct=Math.round(s/n*100);
+ app.innerHTML=`<div class="center"><div style="font-size:34px">🎁</div><h2 style="margin:6px 0">${title}</h2><div class="score">${s}<span style="font-size:24px;color:var(--mut)"> / ${n}</span></div><p class="sub">${pct>=80?'Wonderful work!':pct>=50?'Nice effort — keep going!':'Every word counts. Try again!'}</p>
+ ${miss.length?`<div class="fmt" style="text-align:left"><b style="color:var(--ink)">Review these words</b><br>${miss.map(w=>`<div><b style="color:var(--grn)">${esc(w.w)}</b> — ${esc(w.d)}</div>`).join('')}</div>`:''}
+ <div class="row">${again?`<button class="btn" id="ag">Review ${miss.length} missed word${miss.length>1?'s':''}</button>`:''}<button class="btn ghost" id="m">Back to menu</button></div></div>`;
+ $('#m').onclick=menu;if(again)$('#ag').onclick=again;
+}
+let sample=null;
+if(window.claude){claude.use('db').then(d=>{db=d;if(!d){if(list)app.innerHTML='<div class="center"><div class="ico">🔒</div><p class="sub">Please sign in to claude.ai to open this vocabulary list.</p></div>';return}if(list&&!words.length)fromList(list);else if($('#re'))menu()}).catch(()=>{});claude.use('user').then(async u=>{if(u){uid=await u.id();isT=await u.canEdit();if($('#re'))menu();else if($('#dz'))home()}}).catch(()=>{})}
+if(window.claude)claude.use('sample').then(s=>{sample=s;if($('#re'))menu()}).catch(()=>{});
+async function sentMode(){
+ const pool=shuf(words);let items=[];
+ app.innerHTML='<div class="center"><div class="ico">🎁</div><p class="sub">Writing your B1+ questions…</p></div>';
+ for(let k=0;k<pool.length;k+=25){const part=pool.slice(k,k+25);app.querySelector('.sub').textContent='Writing your B1+ questions… '+Math.min(k+25,pool.length)+' / '+pool.length;
+ try{
+  const r=await sample.json('You are an experienced English teacher. For EACH target word below, write ONE fill-in-the-blank sentence at B1+ level (upper-intermediate, for strong students): 15-25 words, natural, with clear context clues so that only the target word fits. Use the target word EXACTLY as given (do not change its form) and replace it with _____ . Also add "why": one short English sentence explaining the clue. Return ONLY a JSON array like [{"word":"","sentence":"","why":""}]. Words: '+JSON.stringify(part.map(w=>({word:w.w,pos:w.p||'',definition:w.d}))));
+  items.push(...part.map(w=>{const o=(Array.isArray(r)?r:[]).find(x=>x&&norm(x.word)===norm(w.w));return o&&/_{3,}/.test(o.sentence||'')?{...w,b:o.sentence.replace(/_{3,}/g,'_____'),why:o.why||''}:null}).filter(Boolean));
+ }catch(_){break}}
+ {const have=new Set(items.map(x=>x.w));items=items.concat(words.filter(w=>w.b&&!have.has(w.w)))}
+ if(items.length<3){app.innerHTML='<div class="center"><p class="sub">We couldn’t write questions right now. Please try again.</p><div class="row"><button class="btn ghost" id="m">Back to menu</button></div></div>';$('#m').onclick=menu;return}
+ quiz('sent',items);
+}
+document.addEventListener('keydown',e=>{const fc=$('#fc');if(fc&&e.code==='Space'){e.preventDefault();fc.click()}});
+const sn=$('#snow');for(let k=0;k<32;k++){const s=document.createElement('i'),z=10+Math.random()*12;s.textContent=['❄','❅','❆'][k%3];s.style.cssText=`left:${Math.random()*100}%;font-size:${z}px;animation-duration:${12+Math.random()*14}s;animation-delay:-${Math.random()*20}s`;sn.appendChild(s)}
+for(let k=0;k<20;k++){const b=document.createElement('i');b.style.animationDelay=(k%5)*.5+'s';$('#lt').appendChild(b)}
+{const d=Math.ceil((new Date(2026,11,25)-new Date())/864e5);$('#cd').textContent=d>1?'🎅 '+d+' days until Christmas':d===1?'🎅 Christmas is tomorrow!':d===0?'🎅 Merry Christmas!':'🎄 Happy holidays!'}
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(db&&okSlug(h)&&h!==list)fromList(h)});
+home();
+
+{
+const NF={C:261.63,D:293.66,E:329.63,F:349.23,G:392};
+const T=[['E',1],['E',1],['E',2],['E',1],['E',1],['E',2],['E',1],['G',1],['C',1.5],['D',.5],['E',4],
+['F',1],['F',1],['F',1.5],['F',.5],['F',1],['E',1],['E',1],['E',.5],['E',.5],['E',1],['D',1],['D',1],['E',1],['D',2],['G',2],
+['E',1],['E',1],['E',2],['E',1],['E',1],['E',2],['E',1],['G',1],['C',1.5],['D',.5],['E',4],
+['F',1],['F',1],['F',1.5],['F',.5],['F',1],['E',1],['E',1],['E',.5],['E',.5],['G',1],['G',1],['F',1],['D',1],['C',4]];
+let ac=null,mg=null,tm=null,playing=false,on=true,armed=false;
+const bell=(f,t,d)=>{[[f,1,'sine'],[f*2,.35,'triangle'],[f*3.01,.15,'sine']].forEach(([fr,v,ty])=>{const o=ac.createOscillator(),g=ac.createGain(),e=t+Math.max(d,.25)+.35;o.type=ty;o.frequency.value=fr;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.01);g.gain.exponentialRampToValueAtTime(.001,e);o.connect(g);g.connect(mg);o.start(t);o.stop(e+.05)})};
+const start=()=>{if(playing||!on)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume&&ac.resume()}catch(_){return}
+ playing=true;mg=ac.createGain();mg.gain.value=.12;mg.connect(ac.destination);
+ const loop=()=>{if(!playing)return;let t=ac.currentTime+.15;const beat=.36;T.forEach(([n,d])=>{bell(NF[n],t,d*beat);t+=d*beat});tm=setTimeout(loop,(t-ac.currentTime+1.5)*1000)};loop()};
+const stop=()=>{if(!playing)return;playing=false;clearTimeout(tm);try{const g=mg;g.gain.setTargetAtTime(0,ac.currentTime,.05);setTimeout(()=>g.disconnect(),400)}catch(_){}};
+const btn=document.createElement('button');btn.className='mt';btn.hidden=true;document.body.appendChild(btn);
+const lab=()=>{btn.textContent=on?'🎵 Jingle Bells: on':'🔇 Jingle Bells: off'};lab();
+btn.onclick=()=>{on=!on;lab();if(on){armed=true;start()}else stop()};
+document.addEventListener('pointerdown',e=>{armed=true;if(!e.target.closest('.mode,.mt')&&$('#re'))start()});
+document.addEventListener('keydown',()=>{armed=true});
+setInterval(()=>{const m=!!$('#re');btn.hidden=!m;if(m&&on&&armed)start();else if(!m)stop()},400);
+}
+</script></body></html>
