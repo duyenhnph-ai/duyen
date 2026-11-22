@@ -145,6 +145,37 @@ function load(file){
  }catch(_){$('#err').textContent='We couldn’t read any words. Please check the file format below.'}};
  r.readAsArrayBuffer(file);
 }
+/* ---- Load a vocabulary set from the repo: general.html?set=NAME -> sets/NAME.xlsx (or .csv) ---- */
+function setFromBook(wb){
+ const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''}).filter(r=>r.some(c=>String(c).trim()));
+ const w=toWords(rows);
+ if(w.length<2)throw new Error('empty');
+ words=w;
+}
+async function loadSet(name){
+ const fail=(title,msg)=>{
+  app.innerHTML=`<div class="center"><div class="ico">\u{1F50E}</div><h2 style="margin:4px 0">${esc(title)}</h2><p class="sub">${esc(msg)}</p><div class="row"><button class="btn ghost" id="h">Upload a file instead</button></div></div>`;
+  $('#h').onclick=home;
+ };
+ app.innerHTML='<div class="center"><div class="ico">\u{1F381}</div><p class="sub">Loading your vocabulary list…</p></div>';
+ if(!/^[A-Za-z0-9_-]{1,60}$/.test(name)){fail('This link looks incorrect','The list name can only contain letters, numbers, hyphens and underscores. Please ask your teacher for a new link.');return}
+ if(typeof XLSX==='undefined'){fail('Something went wrong','The spreadsheet reader could not be loaded. Please check your internet connection and reload the page.');return}
+ if(location.protocol==='file:'){fail('Please open this page from its web address','Vocabulary lists cannot be loaded when the file is opened directly from a computer. Use the published link instead.');return}
+ let wb=null,net=false;
+ try{
+  let res=await fetch('sets/'+name+'.xlsx',{cache:'no-cache'});
+  if(res.ok){
+   wb=XLSX.read(new Uint8Array(await res.arrayBuffer()),{type:'array'});
+  }else{
+   res=await fetch('sets/'+name+'.csv',{cache:'no-cache'});
+   if(res.ok)wb=XLSX.read(await res.text(),{type:'string'});
+  }
+ }catch(_){net=true}
+ if(net){fail('We couldn’t reach the list','Please check your internet connection and try again.');return}
+ if(!wb){fail('List not found','We couldn’t find a vocabulary list called “'+name+'”. Please check the link with your teacher.');return}
+ try{setFromBook(wb)}catch(_){fail('We couldn’t read any words','The file for “'+name+'” is empty or in the wrong format. Please tell your teacher.');return}
+ menu();
+}
 let cur='',db=null,uid=null,who=null,store=null,isT=false,tmr;
 const MODES=['Match the definition','Type the word','Missing letters','Complete the sentence'];
 const rec=()=>{if(!store||!who)return null;const k=who+(list?' · '+list:'');return store.students[k]=store.students[k]||{fc:{seen:[]},res:{}}};
@@ -327,7 +358,7 @@ const sn=$('#snow');for(let k=0;k<32;k++){const s=document.createElement('i'),z=
 for(let k=0;k<20;k++){const b=document.createElement('i');b.style.animationDelay=(k%5)*.5+'s';$('#lt').appendChild(b)}
 {const d=Math.ceil((new Date(2026,11,25)-new Date())/864e5);$('#cd').textContent=d>1?'🎅 '+d+' days until Christmas':d===1?'🎅 Christmas is tomorrow!':d===0?'🎅 Merry Christmas!':'🎄 Happy holidays!'}
 window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(db&&okSlug(h)&&h!==list)fromList(h)});
-home();
+{const SET=new URLSearchParams(location.search).get('set');if(SET)loadSet(SET);else home()}
 
 {
 const NF={C:261.63,D:293.66,E:329.63,F:349.23,G:392};
