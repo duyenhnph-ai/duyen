@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=1f4b59a2-8930-4396-b6ba-4efee4b01461
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>vocab-list · Vocab Advent</title>
+
+<style>
+:root{--bg:#faf7f2;--ink:#1f2a24;--mut:#6b756e;--grn:#1f5c46;--red:#b53a3a;--card:#fff;--line:#e6e0d4;--ok:#2e7d52;--okbg:#e6f3ec;--badbg:#f8e5e5;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a16;--ink:#eef2ee;--mut:#9aa89f;--grn:#6fbf9a;--red:#e07a7a;--card:#1b2621;--line:#2b3a33;--ok:#7fd3a3;--okbg:#1d3a2b;--badbg:#3d2323;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121a16;--ink:#eef2ee;--mut:#9aa89f;--grn:#6fbf9a;--red:#e07a7a;--card:#1b2621;--line:#2b3a33;--ok:#7fd3a3;--okbg:#1d3a2b;--badbg:#3d2323;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.snow{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.snow i{position:absolute;top:-24px;font-style:normal;line-height:1;color:var(--grn);opacity:.22;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(105vh) translateX(30px)}}
+@media (prefers-reduced-motion:reduce){.snow{display:none}}
+main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:28px 20px 56px}
+header{text-align:center;margin-bottom:28px}
+.tag{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--red)}
+h1{font-size:30px;font-weight:600;margin:6px 0 4px;letter-spacing:-.02em}
+h1 span{color:var(--grn)}
+.sub{color:var(--mut);margin:0}
+.drop{display:block;border:1.5px dashed var(--line);background:var(--card);border-radius:16px;padding:36px 20px;text-align:center;cursor:pointer;transition:.2s}
+.drop:hover,.drop.on{border-color:var(--grn);transform:translateY(-1px)}
+.drop b{display:block;font-size:18px;margin:6px 0 2px}
+.drop small{color:var(--mut)}
+.ico{font-size:30px}
+.fmt{margin:18px 0;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:14px;color:var(--mut)}
+.fmt table{border-collapse:collapse;width:100%;margin-top:8px;font-size:13px}
+.fmt td,.fmt th{border:1px solid var(--line);padding:5px 8px;text-align:left}
+.fmt th{color:var(--grn);font-weight:600}
+button{font:inherit;cursor:pointer}
+.btn{border:0;border-radius:999px;padding:11px 22px;background:var(--grn);color:var(--bg);font-weight:600;transition:.15s}
+.btn:hover{opacity:.88}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--grn)}
+.btn:focus-visible,.opt:focus-visible,.fc:focus-visible,input:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.center{text-align:center}.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.menu{display:grid;gap:12px}
+.mode{display:flex;gap:14px;align-items:center;text-align:left;width:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;color:var(--ink);transition:.15s}
+.mode:hover:not(:disabled){border-color:var(--grn);transform:translateY(-1px)}
+.mode:disabled{opacity:.45;cursor:not-allowed}
+.mode .e{font-size:24px}.mode b{display:block}.mode span{color:var(--mut);font-size:14px}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--mut);font-size:14px;margin-bottom:14px}
+.bar{height:4px;background:var(--line);border-radius:4px;margin-bottom:22px;overflow:hidden}
+.bar div{height:100%;background:var(--red);transition:width .3s}
+.fc{perspective:900px;width:100%;height:340px;background:none;border:0;padding:0}
+.fc .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fc.flip .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;background:var(--card);border:1px solid var(--line);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;overflow:auto}
+.face.back{transform:rotateY(180deg)}
+.face .w{font-size:34px;font-weight:600;color:var(--grn)}
+.face .hint{color:var(--mut);font-size:13px;margin-top:10px}
+.face em{color:var(--mut);margin-top:12px;font-size:15px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:16px}
+.q small{color:var(--red);letter-spacing:.12em;text-transform:uppercase;font-size:11px}
+.q p{margin:8px 0 0;font-size:20px;line-height:1.45}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;color:var(--ink);transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--grn)}
+.opt.ok{background:var(--okbg);border-color:var(--ok)}
+.opt.bad{background:var(--badbg);border-color:var(--red)}
+input.t{width:100%;font:inherit;font-size:18px;padding:13px 16px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.fb{min-height:28px;margin:14px 0 0;font-weight:600;text-align:center}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--red)}
+.score{font-size:56px;font-weight:600;color:var(--grn);margin:8px 0}
+.back{background:none;border:0;color:var(--mut);padding:0}.back:hover{color:var(--ink)}
+.foot{text-align:center;color:var(--mut);font-size:12px;margin-top:36px}
+.err{color:var(--red);text-align:center;margin-top:12px;font-size:14px}
+.meta{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:8px;color:var(--mut);flex-wrap:wrap}
+.pos{font-size:12px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--red);color:var(--red);border-radius:99px;padding:1px 10px}
+.ipa{font-family:ui-monospace,Menlo,monospace;font-size:16px}
+.spk{margin-top:14px;background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:99px;padding:6px 14px;font-size:14px}.spk:hover{border-color:var(--grn)}
+mark{background:transparent;color:var(--red);font-weight:600;border-bottom:2px solid var(--red)}
+.lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:14px 0 4px}
+body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:80px;background:radial-gradient(ellipse at 50% 100%,var(--line),transparent 70%);pointer-events:none;z-index:0}
+.cane{height:6px;border-radius:6px;margin:20px auto 0;max-width:220px;background:repeating-linear-gradient(135deg,var(--red) 0 8px,var(--card) 8px 16px);border:1px solid var(--line)}
+.bar div{background:repeating-linear-gradient(135deg,var(--red) 0 10px,var(--card) 10px 20px)!important}
+.mode:nth-child(odd){border-left:4px solid var(--red)}.mode:nth-child(even){border-left:4px solid var(--grn)}
+.face{border-top:4px solid var(--red)}.face.back{border-top-color:var(--grn)}
+.drop{border-style:dashed;border-color:var(--red);background:linear-gradient(var(--card),var(--card)) padding-box}
+.drop:hover,.drop.on{border-color:var(--grn)}
+.trees{font-size:20px;letter-spacing:.45em;margin-bottom:6px}
+h1 .st{display:inline-block;animation:tw 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){h1 .st{animation:none}}
+.fly{position:fixed;top:46px;left:0;font-size:26px;white-space:nowrap;pointer-events:none;z-index:2;opacity:.9;animation:fly 32s linear infinite;transform:translateX(105vw)}
+@keyframes fly{from{transform:translateX(105vw) translateY(0)}50%{transform:translateX(40vw) translateY(-10px)}to{transform:translateX(-220px) translateY(0)}}
+.bn{display:inline-block;animation:bn 2.2s ease-in-out infinite}@keyframes bn{50%{transform:translateY(-4px) rotate(-6deg)}}
+.trees{font-size:28px;letter-spacing:.3em}
+.mt{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:5;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:8px 14px;font-size:13px}.mt:hover{border-color:var(--grn)}
+@media (prefers-reduced-motion:reduce){.fly{display:none}.bn{animation:none}}
+.lights{display:flex;justify-content:space-around;position:relative;z-index:1;margin:0 -12px 8px;height:34px;overflow:hidden}
+.lights::before{content:"";position:absolute;left:0;right:0;top:-6px;height:20px;border-bottom:2px solid var(--line);border-radius:0 0 50% 50%/0 0 100% 100%}
+.lights i{width:10px;height:15px;border-radius:50% 50% 50% 50%/35% 35% 65% 65%;margin-top:12px;animation:tw 2.4s ease-in-out infinite}
+.lights i:nth-child(4n+1){background:var(--red)}.lights i:nth-child(4n+2){background:#d9a441}.lights i:nth-child(4n+3){background:var(--grn)}.lights i:nth-child(4n){background:#e9e4d6}
+@keyframes tw{50%{opacity:.3}}
+.count{display:inline-block;margin-top:12px;font-size:13px;color:var(--grn);border:1px solid var(--line);background:var(--card);border-radius:99px;padding:3px 14px}
+@media (prefers-reduced-motion:reduce){.lights i{animation:none}}
+.tb{border-collapse:collapse;width:100%;font-size:13px;text-align:left}.tb th,.tb td{border-bottom:1px solid var(--line);padding:8px 8px;white-space:nowrap}.tb th{color:var(--grn);font-weight:600}
+.word{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin:8px 0 18px}
+.ch{min-width:30px;height:46px;line-height:46px;text-align:center;font-size:26px;font-weight:600;color:var(--grn)}
+.sp{width:16px}
+.ml{width:38px;height:46px;text-align:center;font:inherit;font-size:24px;font-weight:600;border:0;border-bottom:2px solid var(--red);background:var(--card);color:var(--ink);border-radius:8px 8px 0 0;padding:0}
+.ml.ok{background:var(--okbg);border-color:var(--ok)}.ml.bad{background:var(--badbg)}
+[hidden]{display:none!important}
+</style></head><body>
+<div class="snow" id="snow" aria-hidden="true"></div>
+<div class="fly" aria-hidden="true">🦌🦌🛷🎅</div>
+<main>
+<div class="lights" id="lt" aria-hidden="true"></div>
+<header><div class="tag">❄ Merry Christmas 2026 ❄</div><h1><span class="st">🎄</span> Vocab <span>Advent</span> <span class="bn">🎅</span></h1><p class="sub">Drop your Excel file. Start practising in seconds.</p><div class="count" id="cd">🎅 33 days until Christmas</div><div class="cane" aria-hidden="true"></div></header>
+<div id="app"></div>
+<div class="foot"><div class="trees" aria-hidden="true">🎄 🎁 🎅 🦌 🎁 🎄</div>Happy holidays — keep learning, one word at a time 🎄</div>
+</main>
+<script>
+const $=s=>document.querySelector(s),app=$('#app');
+let words=[];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const norm=s=>String(s).trim().toLowerCase().replace(/\s+/g,' ');
+function toWords(rows){
+ const h=rows[0].map(norm);
+ let iw=h.findIndex(x=>/word|term|vocab/.test(x)),id=h.findIndex(x=>/defin|mean/.test(x)),ie=h.findIndex(x=>/exam|sent/.test(x)),ip=h.findIndex(x=>/type|pos|part|speech|class/.test(x)),ir=h.findIndex(x=>/pron|ipa|phon/.test(x)),iv=h.findIndex(x=>/viet|translat/.test(x));
+ let start=1;
+ if(iw<0&&id<0){iw=0;id=1;ie=2;ip=ir=iv=-1;start=0}
+ else{if(iw<0)iw=0;if(id<0)id=iw===1?0:1;if(ie<0)ie=[0,1,2,3,4].find(k=>![iw,id,ip,ir,iv].includes(k)&&k<h.length)}
+ return rows.slice(start).map(r=>({w:String(r[iw]||'').trim(),d:String(r[id]||'').trim(),e:String(r[ie]??'').trim(),p:String(r[ip]??'').trim(),ipa:String(r[ir]??'').trim(),vi:String(r[iv]??'').trim()})).filter(x=>x.w&&x.d).map(x=>({...x,b:blank(x)}));
+}
+function blank(x){
+ if(!x.e)return '';
+ const stem=x.w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+ const re=new RegExp('\\b'+stem+'\\w*','i');
+ return re.test(x.e)?x.e.replace(re,'_____'):'';
+}
+function load(file){
+ const r=new FileReader();
+ r.onload=e=>{try{
+  const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array'});
+  const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''}).filter(r=>r.some(c=>String(c).trim()));
+  words=toWords(rows);
+  if(words.length<2)throw 0;
+  menu();
+ }catch(_){$('#err').textContent='We couldn’t read any words. Please check the file format below.'}};
+ r.readAsArrayBuffer(file);
+}
+let cur='',db=null,uid=null,who=null,store=null,isT=false,tmr;
+const MODES=['Match the definition','Type the word','Missing letters','Complete the sentence'];
+const rec=()=>{if(!store||!who)return null;const k=who+(list?' · '+list:'');return store.students[k]=store.students[k]||{fc:{seen:[]},res:{}}};
+function save(now){clearTimeout(tmr);const go=async()=>{if(!db||!uid||!store)return;const r=rec();if(r)r.t=Date.now();try{await db.doc('progress/'+uid).set(store)}catch(_){}};now?go():tmr=setTimeout(go,1500)}
+function logFc(n,miss){const r=rec();if(!r)return;r.fc.known=n-miss.length;r.fc.review=miss.map(x=>x.w);r.fc.total=words.length;r.fc.rounds=(r.fc.rounds||0)+1;save(1)}
+function logRes(s,n,miss){const r=rec();if(!r||cur==='Flashcards')return;const x=r.res[cur]=r.res[cur]||{attempts:0,best:0};x.attempts++;x.last=Math.round(s/n*100);x.best=Math.max(x.best,x.last);x.wrong=miss.map(w=>w.w).slice(0,60);x.t=Date.now();save(1)}
+function ask(next){
+ if(!window.claude){who='Student';store={students:{}};rec();next();return}
+ let last='';try{last=localStorage.getItem('vname')||''}catch(_){}
+ app.innerHTML=`<div class="center"><div class="ico">\u270f\ufe0f</div><h2 style="margin:4px 0">What\u2019s your name?</h2><p class="sub">Your teacher will see your progress.</p><div style="max-width:320px;margin:18px auto 0"><input class="t" id="nm" maxlength="40" placeholder="Full name" autocomplete="name" value="${esc(last)}"></div><div class="fb" id="fb" role="alert"></div><div class="row"><button class="btn ghost" id="b">Back</button><button class="btn" id="go">Start</button></div></div>`;
+ const go=async()=>{const v=$('#nm').value.trim().replace(/\s+/g,' ');if(!v){$('#fb').className='fb bad';$('#fb').textContent='Please enter your name.';return}
+  who=v;try{localStorage.setItem('vname',v)}catch(_){}
+  store={students:{}};
+  if(db&&uid){try{const sn=await db.doc('progress/'+uid).get();if(sn.exists&&sn.data().students)store=sn.data()}catch(_){}}
+  rec();next()};
+ $('#go').onclick=go;$('#nm').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();go()}};$('#b').onclick=menu;$('#nm').focus();
+}
+function dash(){
+ app.innerHTML='<div class="top"><button class="back" id="m">\u2190 Menu</button><span>Teacher dashboard</span></div><div id="dt" class="sub center">Loading\u2026</div>';
+ let un=null;$('#m').onclick=()=>{un&&un();menu()};
+ un=db.collection('progress').onSnapshot(snap=>{
+  const rows=[];snap.docs.forEach(d=>{const st=(d.data()||{}).students||{};for(const k in st)rows.push([k,st[k]])});
+  rows.sort((a,b)=>(b[1].t||0)-(a[1].t||0));
+  $('#dt').className='';
+  $('#dt').innerHTML=rows.length?`<div style="overflow-x:auto"><table class="tb"><tr><th>Student</th><th>Flashcards (flipped)</th><th>Match</th><th>Type</th><th>Missing letters</th><th>Sentences</th><th>Last active</th></tr>${rows.map(([k,x])=>{const fc=x.fc||{seen:[]};return `<tr><td><b>${esc(k)}</b></td><td>${fc.seen.length}/${fc.total||words.length}${fc.known!=null?` \u00b7 ${fc.known} known`:''}</td>${MODES.map(m=>{const r=(x.res||{})[m];return `<td title="${r?esc('Missed last time: '+(r.wrong||[]).join(', ')):''}">${r?`${r.best}% best \u00b7 ${r.last}% last (${r.attempts}\u00d7)`:'\u2014'}</td>`}).join('')}<td>${x.t?esc(new Date(x.t).toLocaleString()):'\u2014'}</td></tr>`}).join('')}</table></div><p class="sub" style="font-size:12px;margin-top:10px">Updates live. Hover a score to see the words missed last time.</p>`:'<p class="sub center">No student activity yet.</p>';
+ },()=>{$('#dt').textContent='Could not load progress.'});
+}
+const CANON='https://claude.ai/artifact/QDZihTDmJh9MVfViXqbZoN';
+const RES=['settings','sidebar','customize','upgrade','downloads'];
+const okSlug=s=>/^[a-z0-9-]{3,40}$/.test(s)&&!RES.includes(s)&&!s.startsWith('comment-');
+let list=okSlug(location.hash.slice(1))?location.hash.slice(1):'';
+const mkWords=a=>a.map(r=>{const x={w:r[0],p:r[1],ipa:r[2],d:r[3],e:r[4],vi:r[5]||''};x.b=blank(x);return x});
+async function fromList(s){
+ list=s;app.innerHTML='<div class="center"><p class="sub">Loading your list\u2026</p></div>';
+ try{const sn=await db.doc('lists/'+s).get();if(sn.exists&&sn.data().words){words=mkWords(sn.data().words);if(words.length){menu();return}}}catch(_){}
+ app.innerHTML='<div class="center"><div class="ico">\U0001F50E</div><p class="sub">We couldn\u2019t find this vocabulary list. Please check the link with your teacher.</p><div class="row"><button class="btn ghost" id="h">Upload a file instead</button></div></div>';$('#h').onclick=()=>{list='';home()};
+}
+function pubAsk(){
+ app.innerHTML=`<div class="center"><div class="ico">\U0001F4E4</div><h2 style="margin:4px 0">Name this list</h2><p class="sub">Each name gets its own link, e.g. grade6-unit1. Use letters, numbers and hyphens.</p><div style="max-width:320px;margin:18px auto 0"><input class="t" id="ln" maxlength="40" placeholder="grade6-unit1" value="${esc(list)}" autocapitalize="off" spellcheck="false"></div><div class="fb" id="fb" role="alert"></div><div class="row"><button class="btn ghost" id="b">Back</button><button class="btn" id="go">Publish</button></div></div>`;
+ const err=t=>{$('#fb').className='fb bad';$('#fb').textContent=t};
+ const go=async()=>{const s=$('#ln').value.trim().toLowerCase();if(!okSlug(s)){err('Use 3\u201340 letters, numbers or hyphens.');return}
+  const data={name:s,words:words.map(x=>[x.w,x.p||'',x.ipa||'',x.d,x.e||'',x.vi||'']),t:Date.now()};
+  if(JSON.stringify(data).length>240000){err('This list is too large to publish.');return}
+  $('#go').disabled=true;
+  try{await db.doc('lists/'+s).set(data);list=s;linkScreen(s)}catch(_){$('#go').disabled=false;err('Could not publish \u2014 try again.')}};
+ $('#go').onclick=go;$('#ln').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();go()}};$('#b').onclick=menu;$('#ln').focus();
+}
+function linkScreen(s){
+ const u=CANON+'#'+s;
+ app.innerHTML=`<div class="center"><div class="ico">\U0001F381</div><h2 style="margin:4px 0">Published! (${words.length} words)</h2><p class="sub">Send this link to your students:</p><div style="max-width:480px;margin:14px auto 0"><input class="t" id="lk" readonly value="${esc(u)}" style="font-size:14px"></div><div class="row"><button class="btn" id="cp">Copy link</button><button class="btn ghost" id="m">Back to menu</button></div><div class="fb" id="fb"></div></div>`;
+ $('#lk').onfocus=e=>e.target.select();$('#m').onclick=menu;
+ $('#cp').onclick=async()=>{try{await navigator.clipboard.writeText(u);$('#fb').className='fb ok';$('#fb').textContent='Copied!'}catch(_){$('#lk').select();$('#fb').className='fb';$('#fb').textContent='Press Ctrl+C (or \u2318C) to copy the link.'}};
+}
+async function lists(){
+ app.innerHTML='<div class="top"><button class="back" id="m">\u2190 Menu</button><span>My lists</span></div><div id="dt" class="sub center">Loading\u2026</div>';
+ $('#m').onclick=()=>words.length?menu():home();
+ try{
+  const sn=await db.collection('lists').get();
+  const rows=sn.docs.map(d=>{const x=d.data()||{};return{id:d.id,n:(x.words||[]).length,t:x.t||0}}).sort((a,b)=>b.t-a.t);
+  $('#dt').className='';
+  $('#dt').innerHTML=rows.length?rows.map(r=>`<div class="fmt" style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 10px"><div><b style="color:var(--ink)">${esc(r.id)}</b><br>${r.n} words</div><div class="row" style="margin:0"><button class="btn ghost" data-c="${esc(r.id)}">Copy link</button><button class="btn ghost" data-d="${esc(r.id)}">Delete</button></div></div>`).join(''):'<p class="sub center">No lists yet.</p>';
+  app.querySelectorAll('[data-c]').forEach(b=>b.onclick=async()=>{const u=CANON+'#'+b.dataset.c;try{await navigator.clipboard.writeText(u);b.textContent='Copied!'}catch(_){b.textContent=u}});
+  app.querySelectorAll('[data-d]').forEach(b=>b.onclick=async()=>{if(b.dataset.s!=='1'){b.dataset.s='1';b.textContent='Tap again to delete';return}try{await db.doc('lists/'+b.dataset.d).delete();lists()}catch(_){b.textContent='Failed'}});
+ }catch(_){$('#dt').textContent='Could not load lists.'}
+}
+const PRE={"title":"vocab-list","words":[["fitness","noun","/ˈfɪtnəs/","being healthy and physically strong","Regular exercise can improve your fitness.","sự khỏe mạnh và thể lực"],["work out","phrasal verb","/wɜːk aʊt/","to exercise","I work out at the gym three times a week.","tập thể dục"],["fast food","noun","/fɑːst fuːd/","food prepared and served quickly","Eating too much fast food is unhealthy.","đồ ăn nhanh"],["balanced diet","noun phrase","/ˌbælənst ˈdaɪət/","a diet with the correct types and amounts of food","A balanced diet provides the nutrients we need.","chế độ ăn cân bằng"],["full of energy","adjective phrase","/fʊl əv ˈenədʒi/","having strength and enthusiasm","My grandfather is still full of energy.","tràn đầy năng lượng"],["bad habit","noun phrase","/bæd ˈhæbɪt/","a repeated action that is not good for health","Staying up late is a bad habit.","thói quen xấu"],["take regular exercise","verb phrase","/teɪk ˈreɡjələ ˈeksəsaɪz/","to exercise frequently","You should take regular exercise to stay fit.","tập thể dục thường xuyên"],["fresh fruit","noun phrase","/freʃ fruːt/","fruit that has not been processed","Fresh fruit is a healthy snack.","trái cây tươi"],["treatment","noun","/ˈtriːtmənt/","something that helps cure an illness or injury","The doctor gave him treatment for his injury.","sự điều trị"],["strength","noun","/streŋθ/","the quality of being physically strong","Lifting weights can improve your strength.","sức mạnh"],["muscle","noun","/ˈmʌsl/","a part of the body that allows movement","Regular exercise helps build strong muscles.","cơ bắp"],["suffer from","phrasal verb","/ˈsʌfə frəm/","to have a health problem","Many people suffer from stress.","chịu đựng, mắc phải"],["examine","verb","/ɪɡˈzæmɪn/","to look at somebody carefully to find a health problem","The doctor examined the patient carefully.","khám"],["cut down on","phrasal verb","/kʌt daʊn ɒn/","to reduce the amount of something","You should cut down on sugar.","cắt giảm"],["life expectancy","noun phrase","/laɪf ɪkˈspektənsi/","the number of years a person is likely to live","Life expectancy has increased in many countries.","tuổi thọ"],["ingredient","noun","/ɪnˈɡriːdiənt/","a substance used to make a particular food","Check the ingredients on the food label.","thành phần"],["nutrient","noun","/ˈnjuːtriənt/","a substance needed for growth and health","Vegetables contain many important nutrients.","chất dinh dưỡng"],["fall asleep","phrasal verb","/fɔːl əˈsliːp/","to start sleeping","I listen to soft music when I cannot fall asleep.","đi vào giấc ngủ"],["bacteria","noun","/bækˈtɪəriə/","small living organisms that can cause disease","Some bacteria are helpful to our bodies.","vi khuẩn"],["virus","noun","/ˈvaɪrəs/","a tiny germ that can cause disease","A virus can spread quickly among people.","vi-rút"],["generation gap","noun phrase","/dʒenəˈreɪʃn ɡæp/","differences between young and older people","There is a generation gap in many families.","khoảng cách thế hệ"],["nuclear family","noun phrase","/ˌnjuːkliə ˈfæməli/","a family consisting of parents and children","Lan lives in a nuclear family.","gia đình hạt nhân"],["extended family","noun phrase","/ɪkˌstendɪd ˈfæməli/","a family including grandparents, uncles, and aunts","He lives with his extended family.","gia đình nhiều thế hệ"],["argument","noun","/ˈɑːɡjumənt/","a disagreement between people","They often have arguments about screen time.","sự tranh cãi"],["generational difference","noun phrase","/ˌdʒenəreɪʃənəl ˈdɪfrəns/","a difference between people of different generations","Generational differences can cause conflicts.","sự khác biệt thế hệ"],["traditional view","noun phrase","/trəˈdɪʃənəl vjuː/","a long-established belief or opinion","My grandparents have traditional views.","quan điểm truyền thống"],["cultural value","noun phrase","/ˈkʌltʃərəl ˈvæljuː/","a belief about what is important in a culture","Family is an important cultural value.","giá trị văn hóa"],["common characteristic","noun phrase","/ˈkɒmən ˌkærəktəˈrɪstɪk/","a quality shared by many people","Teamwork is a common characteristic of this group.","đặc điểm chung"],["generational conflict","noun phrase","/ˌdʒenəreɪʃənəl ˈkɒnflɪkt/","a disagreement between generations","Open communication can reduce generational conflict.","xung đột thế hệ"],["follow in someone’s footsteps","idiom","/ˈfɒləʊ ɪn ˈsʌmwʌnz ˈfʊtsteps/","to do the same work as an older person","He does not want to follow in his father's footsteps.","nối nghiệp"],["digital native","noun phrase","/ˌdɪdʒɪtl ˈneɪtɪv/","a person who grew up with digital technology","Many teenagers are digital natives.","người bản địa số"],["curious","adjective","/ˈkjʊəriəs/","wanting to know or learn something","Curious students ask many questions.","tò mò, ham hiểu biết"],["experiment","verb","/ɪkˈsperɪment/","to try or test new ideas or methods","Young people like to experiment with new apps.","thử nghiệm"],["hire","verb","/haɪə/","to employ somebody for a job","The company plans to hire more workers.","thuê, tuyển dụng"],["modal verb","noun","/ˈməʊdl vɜːb/","an auxiliary verb expressing possibility, obligation, or advice","Must is a modal verb showing necessity.","động từ khiếm khuyết"],["permission","noun","/pəˈmɪʃn/","approval to do something","You must ask for permission before leaving.","sự cho phép"],["limit screen time","verb phrase","/ˈlɪmɪt skriːn taɪm/","to control the time spent using digital devices","Parents should limit screen time.","giới hạn thời gian dùng màn hình"],["smart city","noun phrase","/smɑːt ˈsɪti/","a city using technology to improve services","A smart city uses sensors and artificial intelligence.","thành phố thông minh"],["city dweller","noun","/ˈsɪti ˌdwelə/","a person who lives in a city","City dwellers often use public transport.","cư dân thành phố"],["traffic jam","noun","/ˈtræfɪk dʒæm/","a line of vehicles moving slowly or not at all","Traffic jams are common during rush hour.","tắc nghẽn giao thông"],["urban centre","noun phrase","/ˈɜːbən ˈsentə/","an area in a city where many people live","The urban centre is very crowded.","khu trung tâm đô thị"],["roof garden","noun phrase","/ruːf ˈɡɑːdn/","a garden built on the top of a building","The apartment has a beautiful roof garden.","vườn trên mái"],["skyscraper","noun","/ˈskaɪskreɪpə/","a very tall modern building","The new skyscraper dominates the city skyline.","tòa nhà chọc trời"],["public transport","noun phrase","/ˌpʌblɪk ˈtrænspɔːt/","transport available for everyone","Public transport can reduce pollution.","phương tiện giao thông công cộng"],["private vehicle","noun phrase","/ˌpraɪvət ˈviːəkl/","a vehicle owned for personal use","Fewer private vehicles will make roads safer.","phương tiện cá nhân"],["modern infrastructure","noun phrase","/ˌmɒdn ˈɪnfrəstrʌktʃə/","modern basic systems and structures of a city","Modern infrastructure attracts new businesses.","cơ sở hạ tầng hiện đại"],["operate efficiently","verb phrase","/ˈɒpəreɪt ɪˈfɪʃəntli/","to work well without wasting resources","Smart systems help cities operate efficiently.","vận hành hiệu quả"],["sensor","noun","/ˈsensə/","a device that detects changes such as light or pressure","A sensor informs workers when a bin is full.","cảm biến"],["pedestrian zone","noun phrase","/pəˈdestriən zəʊn/","an area designed for people walking","The city has created a new pedestrian zone.","khu vực dành cho người đi bộ"],["renewable energy","noun phrase","/rɪˌnjuːəbl ˈenədʒi/","energy from sources that can naturally be replaced","Solar power is a form of renewable energy.","năng lượng tái tạo"],["liveable","adjective","/ˈlɪvəbl/","suitable and pleasant to live in","Clean parks make the city more liveable.","đáng sống"],["carbon footprint","noun phrase","/ˈkɑːbən ˈfʊtprɪnt/","the amount of carbon emissions caused by an activity","Cycling to work can reduce your carbon footprint.","dấu chân carbon"],["interact","verb","/ˌɪntərˈækt/","to communicate or do things with others","People need places to interact face to face.","tương tác"],["privacy","noun","/ˈprɪvəsi/","the state of being free from observation","Cameras may threaten people's privacy.","sự riêng tư"],["sense of community","noun phrase","/sens əv kəˈmjuːnəti/","a feeling of belonging to a group","Shared activities build a sense of community.","ý thức cộng đồng"],["ASEAN","proper noun","/ˈæsiæn/","the Association of Southeast Asian Nations","ASEAN promotes cooperation in Southeast Asia.","Hiệp hội các quốc gia Đông Nam Á"],["volunteer","noun","/ˌvɒlənˈtɪə/","a person who works without payment","She became a volunteer at a community centre.","tình nguyện viên"],["qualified","adjective","/ˈkwɒlɪfaɪd/","having the necessary training or experience","Applicants must be qualified for the programme.","đủ tiêu chuẩn"],["development","noun","/dɪˈveləpmənt/","the process of becoming bigger or better","The project supports community development.","sự phát triển"],["goal","noun","/ɡəʊl/","something that you hope to achieve","Our main goal is to promote youth volunteering.","mục tiêu"],["cultural exchange","noun phrase","/ˈkʌltʃərəl ɪksˈtʃeɪndʒ/","the sharing of traditions and knowledge between cultures","The programme encourages cultural exchange.","trao đổi văn hóa"],["current issue","noun phrase","/ˈkʌrənt ˈɪʃuː/","an important matter happening now","Climate change is a serious current issue.","vấn đề hiện tại"],["contribution","noun","/ˌkɒntrɪˈbjuːʃn/","something given to help make something successful","Everyone made a contribution to the event.","sự đóng góp"],["leadership skill","noun phrase","/ˈliːdəʃɪp skɪl/","the ability to organise people towards a goal","The programme develops students' leadership skills.","kỹ năng lãnh đạo"],["represent","verb","/ˌreprɪˈzent/","to act or speak officially for somebody","She will represent Viet Nam at the conference.","đại diện"],["eye-opening","adjective","/ˈaɪ ˌəʊpənɪŋ/","surprising because it teaches something new","The cultural trip was an eye-opening experience.","mở mang hiểu biết"],["relation","noun","/rɪˈleɪʃn/","the way people or groups behave towards each other","The event strengthened relations between students.","mối quan hệ"],["leadership","noun","/ˈliːdəʃɪp/","the ability to guide or influence others","Good leadership is important in a team.","khả năng lãnh đạo"],["community project","noun phrase","/kəˈmjuːnəti ˈprɒdʒekt/","an activity designed to help a community","They proposed a community project for local children.","dự án cộng đồng"],["proposal","noun","/prəˈpəʊzl/","a formal plan or suggestion","The students wrote a proposal for a welcome event.","đề xuất"],["welcome event","noun phrase","/ˈwelkəm ɪˈvent/","an event organised to greet visitors","The school held a welcome event for ASEAN students.","sự kiện chào mừng"],["compliment","noun","/ˈkɒmplɪmənt/","a polite expression of praise","She gave me a compliment on my presentation.","lời khen"],["prosperity","noun","/prɒˈsperəti/","wealth and success","People wish one another prosperity at New Year.","sự thịnh vượng"],["traditional game","noun phrase","/trəˈdɪʃənəl ɡeɪm/","a game passed down through a culture","Tug of war is a popular traditional game.","trò chơi truyền thống"],["global warming","noun phrase","/ˌɡləʊbl ˈwɔːmɪŋ/","the increase in the earth's average temperature","Global warming affects people and nature.","sự nóng lên toàn cầu"],["greenhouse gas","noun phrase","/ˈɡriːnhaʊs ɡæs/","a gas that traps heat in the atmosphere","Carbon dioxide is a greenhouse gas.","khí nhà kính"],["greenhouse effect","noun phrase","/ˈɡriːnhaʊs ɪˌfekt/","the process of gases trapping heat near the earth","The greenhouse effect makes the planet warmer.","hiệu ứng nhà kính"],["fossil fuel","noun phrase","/ˈfɒsl fjuːəl/","a fuel formed from ancient plants and animals","Coal is a fossil fuel.","nhiên liệu hóa thạch"],["coal","noun","/kəʊl/","a black rock burned to produce heat","Burning coal releases carbon dioxide.","than đá"],["release","verb","/rɪˈliːs/","to let a substance flow out","Factories release gases into the atmosphere.","thải ra, giải phóng"],["renewable","adjective","/rɪˈnjuːəbl/","able to be replaced naturally","Wind is a renewable source of energy.","có thể tái tạo"],["waste","noun","/weɪst/","materials that are no longer needed","We should recycle household waste.","rác thải"],["sea level","noun phrase","/ˈsiː ˌlevl/","the average height of the surface of the sea","Global warming is causing sea levels to rise.","mực nước biển"],["deforestation","noun","/ˌdiːfɒrɪˈsteɪʃn/","the cutting down or burning of forests","Deforestation increases carbon dioxide in the air.","nạn phá rừng"],["emission","noun","/ɪˈmɪʃn/","a gas or substance sent into the atmosphere","Vehicle emissions contribute to air pollution.","khí thải"],["methane","noun","/ˈmiːθeɪn/","a powerful greenhouse gas","Farming activities can produce methane.","khí mê-tan"],["carbon","noun","/ˈkɑːbən/","a chemical element found in living things","Trees store carbon in their trunks and soil.","cacbon"],["black carbon","noun phrase","/blæk ˈkɑːbən/","tiny black particles produced by burning materials","Black carbon can speed up ice melting.","muội than, cacbon đen"],["soot","noun","/sʊt/","tiny black particles from burning wood or coal","Soot from open fires pollutes the air.","muội than"],["crop","noun","/krɒp/","a plant grown by farmers for food","Rice is an important crop in Viet Nam.","cây trồng, mùa màng"],["landfill","noun","/ˈlændfɪl/","a place where waste is buried","Methane can come from landfill waste.","bãi chôn lấp rác"],["trap heat","verb phrase","/træp hiːt/","to keep heat from escaping","Greenhouse gases trap heat in the atmosphere.","giữ, giữ lại nhiệt"],["polar ice cap","noun phrase","/ˈpəʊlə aɪs kæp/","a large area of ice at a pole","Polar ice caps are melting faster.","chỏm băng cực"],["climate change","noun phrase","/ˈklaɪmət tʃeɪndʒ/","long-term changes in the earth's climate","Climate change threatens many coastal areas.","biến đổi khí hậu"]]};
+const MARK='const PRE='+'null;';
+function exportPage(){
+ const name=(prompt('Name this list (e.g. grade6-unit1):','vocab-list')||'').trim();
+ if(!name)return;
+ const c=document.documentElement.cloneNode(true);
+ c.querySelector('#app').innerHTML='';c.querySelector('#snow').innerHTML='';c.querySelector('#lt').innerHTML='';
+ c.querySelectorAll('.mt,script[src]').forEach(x=>x.remove());
+ c.querySelector('title').textContent=name+' \u00b7 Vocab Advent';
+ const json=JSON.stringify({title:name,words:words.map(x=>[x.w,x.p||'',x.ipa||'',x.d,x.e||'',x.vi||''])}).replace(/</g,'\\u003c');
+ let h='<!DOCTYPE html>\n'+c.outerHTML;
+ if(h.indexOf(MARK)<0){alert('Export failed');return}
+ h=h.replace(MARK,()=>'const PRE='+json+';');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([h],{type:'text/html'}));a.download='index.html';document.body.appendChild(a);a.click();a.remove();
+}
+function home(){
+ app.innerHTML=`<label class="drop" id="dz"><div class="ico">🎁</div><b>Drop your Excel file here</b><small>or click to browse · .xlsx, .xls, .csv</small><input type="file" id="f" accept=".xlsx,.xls,.csv" hidden></label>
+ <div class="err" id="err" role="alert"></div>
+ <div class="fmt"><b style="color:var(--ink)">Expected format</b> — first sheet, one word per row:
+ <div style="overflow-x:auto"><table><tr><th>Word</th><th>Part of speech</th><th>Pronunciation</th><th>Definition</th><th>Example</th></tr><tr><td>festive</td><td>adj</td><td>/ˈfestɪv/</td><td>happy and celebrating…</td><td>The town looks festive…</td></tr></table></div>
+ <div style="margin-top:8px">Only Word and Definition are required. Missing part of speech or pronunciation can be filled in automatically, and “complete the sentence” questions are written for you at B1+ level.</div></div>`;
+ const dz=$('#dz'),f=$('#f');
+ if(isT&&db){const r=document.createElement('div'),b=document.createElement('button');r.className='row';b.className='btn ghost';b.textContent='📚 My lists';b.onclick=lists;r.appendChild(b);app.appendChild(r)}
+ f.onchange=()=>f.files[0]&&load(f.files[0]);
+ ['dragover','dragenter'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.add('on')}));
+ ['dragleave','drop'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.remove('on')}));
+ dz.addEventListener('drop',e=>e.dataTransfer.files[0]&&load(e.dataTransfer.files[0]));
+}
+function menu(){
+ const ns=words.filter(w=>w.b).length;
+ const m=[['🎁','Flashcards','Flip cards and track what you know',()=>cards(),0],['🔔','Match the definition','Read a definition, choose the right word',()=>quiz('def',words),words.length<3],['⭐','Type the word','Read a definition, type the word',()=>quiz('type',words),0],['🎄','Missing letters','Fill in the gaps to complete each word',()=>missing(words),0],['🧦','Complete the sentence','Fresh B1+ sentences written for you — choose the missing word',()=>sentMode(),!(sample&&words.length>=4)&&ns<3]];
+ app.innerHTML=`<div class="top"><span><b style="color:var(--ink)">${words.length}</b> words loaded</span><button class="back" id="re">↺ Load another file</button></div><div class="menu">${m.map((x,i)=>`<button class="mode" data-i="${i}" ${x[4]?'disabled':''}><span class="e">${x[0]}</span><div><b>${x[1]}</b><span>${x[4]?'Not enough data for this mode':x[2]}</span></div></button>`).join('')}</div>`;
+ $('#re').onclick=home;if(PRE)$('#re').hidden=true;
+ if(!window.claude&&!PRE&&words.length){const r=document.createElement('div'),b=document.createElement('button');r.className='row';b.className='btn';b.textContent='⬇ Download student page';b.onclick=exportPage;r.appendChild(b);app.appendChild(r)}
+ {const nt=document.createElement('div');nt.className='sub center';nt.style.cssText='margin-top:18px;font-size:13px';nt.textContent=db&&uid?'✓ Your progress is shared with your teacher':window.claude?'Progress is not being recorded on this device':'';app.appendChild(nt);
+ if(isT&&db){const r=document.createElement('div'),b=document.createElement('button');r.className='row';b.className='btn ghost';b.textContent='👩‍🏫 Teacher dashboard';b.onclick=dash;r.appendChild(b);const p=document.createElement('button');p.className='btn ghost';p.textContent='📤 Publish this list for students';p.onclick=pubAsk;r.appendChild(p);const q=document.createElement('button');q.className='btn ghost';q.textContent='📚 My lists';q.onclick=lists;r.appendChild(q);app.appendChild(r)}}
+ if(sample&&words.some(w=>!w.p||!w.ipa)){const r=document.createElement('div'),b=document.createElement('button');r.className='row';b.className='btn ghost';b.textContent='✨ Auto-fill part of speech & pronunciation';b.onclick=async()=>{b.disabled=true;b.textContent='Filling in…';try{const need=words.filter(w=>!w.p||!w.ipa);for(let k=0;k<need.length;k+=40){const part=need.slice(k,k+40);b.textContent='Filling in… '+Math.min(k+40,need.length)+' / '+need.length;const res=await sample.json('For each English word give its part of speech (n., v., adj., adv., etc.) and its IPA pronunciation in slashes. Return ONLY a JSON array like [{"word":"","pos":"","ipa":""}]. Words: '+JSON.stringify(part.map(w=>w.w)));for(const o of Array.isArray(res)?res:[]){const w=words.find(x=>norm(x.w)===norm(o.word));if(w){w.p=w.p||o.pos||'';w.ipa=w.ipa||o.ipa||''}}}}catch(_){}menu()};r.appendChild(b);app.appendChild(r)}
+ app.querySelectorAll('.mode').forEach(b=>b.onclick=()=>{cur=m[b.dataset.i][1];ask(m[b.dataset.i][3])});
+}
+const say=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}catch(_){}};
+function cards(src){
+ let deck=shuf(src||words),i=0,flip=false,miss=[];const n=deck.length;
+ const hl=(e,w)=>esc(e).replace(new RegExp('\\b('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\w*)','ig'),'<mark>$1</mark>');
+ const show=()=>{
+  if(i>=n)return logFc(n,miss),done(n-miss.length,n,miss,'Deck complete!',miss.length?()=>cards(miss):0);
+  const w=deck[i],meta=`${w.p?`<span class="pos">${esc(w.p)}</span>`:''}${w.ipa?`<span class="ipa">${esc(w.ipa)}</span>`:''}`;
+  app.innerHTML=`<div class="top"><button class="back" id="m">← Menu</button><span>${i+1} / ${n} · <span style="color:var(--red)">${miss.length} to review</span></span></div><div class="bar"><div style="width:${i/n*100}%"></div></div>
+  <div class="fc ${flip?'flip':''}" id="fc" role="button" tabindex="0" aria-label="Flip card"><div class="in"><div class="face"><div class="w">${esc(w.w)}</div><div class="meta">${meta}</div><button class="spk" id="sp">🔊 Listen</button><div class="hint">Tap card to flip · Space</div></div><div class="face back"><div class="lbl" style="margin-top:0">Meaning</div><div style="font-size:20px">${esc(w.d)}</div>${w.vi?`<div class="lbl">Vietnamese</div><div style="font-size:20px;color:var(--grn);font-weight:600">${esc(w.vi)}</div>`:''}${w.e?`<div class="lbl">Example</div><em style="margin:0">“${hl(w.e,w.w)}”</em>`:''}</div></div></div>
+  <div class="row"><button class="btn ghost" id="no">Still learning</button><button class="btn" id="yes">I know it</button></div>`;
+  $('#m').onclick=menu;
+  $('#fc').onclick=()=>{flip=!flip;$('#fc').classList.toggle('flip',flip);if(flip){const r=rec();if(r&&!r.fc.seen.includes(w.w)){r.fc.seen.push(w.w);r.fc.total=words.length;save()}}};
+  $('#sp').onclick=e=>{e.stopPropagation();say(w.w)};
+  const nx=k=>{if(!k)miss.push(w);i++;flip=false;show()};
+  $('#yes').onclick=()=>nx(1);$('#no').onclick=()=>nx(0);
+ };
+ show();
+}
+function quiz(kind,pool,_){
+ const items=shuf(pool);let i=0,score=0,miss=[];
+ const label={def:'Which word matches?',type:'Type the word',sent:'Complete the sentence'}[kind];
+ const show=()=>{
+  if(i>=items.length)return done(score,items.length,miss,'Round complete!',miss.length?()=>quiz(kind,miss):0);
+  const w=items[i],txt=kind==='sent'?w.b:w.d;
+  let body;
+  if(kind==='type')body=`<input class="t" id="a" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Your answer"><div class="row"><button class="btn ghost" id="h">Hint</button><button class="btn" id="c">Check</button></div>`;
+  else{const o=shuf([w,...shuf(words.filter(x=>x.w!==w.w)).sort((a,b)=>(b.p===w.p)-(a.p===w.p)).slice(0,3)]);body=`<div class="opts">${o.map(x=>`<button class="opt" data-w="${esc(x.w)}">${esc(x.w)}</button>`).join('')}</div>`}
+  app.innerHTML=`<div class="top"><button class="back" id="m">← Menu</button><span>${i+1} / ${items.length} · Score ${score}</span></div><div class="bar"><div style="width:${i/items.length*100}%"></div></div>
+  <div class="q"><small>${label}</small><p>${esc(txt)}</p></div>${body}<div class="fb" id="fb" aria-live="polite"></div><div class="row" id="nx" hidden><button class="btn" id="n">Next →</button></div>`;
+  $('#m').onclick=menu;
+  let locked=false;
+  const fin=ok=>{locked=true;if(ok)score++;else miss.push(w);$('#nx').hidden=false;$('#n').focus();$('#n').onclick=()=>{i++;show()}};
+  if(kind==='type'){
+   const a=$('#a');a.focus();
+   $('#h').onclick=()=>{$('#fb').className='fb';$('#fb').textContent=`Starts with “${w.w[0]}” · ${w.w.length} letters`};
+   const chk=()=>{if(locked||!a.value.trim())return;const ok=norm(a.value)===norm(w.w);a.disabled=true;$('#c').disabled=$('#h').disabled=true;$('#fb').className='fb '+(ok?'ok':'bad');$('#fb').textContent=ok?'Correct! ✨':'The answer is: '+w.w;fin(ok)};
+   $('#c').onclick=chk;a.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();chk()}};
+  }else app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+   if(locked)return;const ok=b.dataset.w===w.w;
+   app.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.w===w.w)x.classList.add('ok')});
+   if(!ok)b.classList.add('bad');
+   $('#fb').className='fb '+(ok?'ok':'bad');$('#fb').textContent=ok?'Correct! ✨':'Not quite — the answer is '+w.w;if(w.why)$('#fb').textContent+=' — '+w.why;fin(ok);
+  });
+ };
+ show();
+}
+function missing(pool){
+ const items=shuf(pool);let i=0,score=0,miss=[];
+ const mk=w=>{const L=[...w.w].map((c,k)=>/[a-z]/i.test(c)&&k>0?k:-1).filter(k=>k>=0);const n=Math.min(L.length,Math.min(5,Math.max(2,Math.round(w.w.replace(/[^a-z]/gi,'').length/2.5))));return new Set(shuf(L).slice(0,n))};
+ const show=()=>{
+  if(i>=items.length)return done(score,items.length,miss,'Round complete!',miss.length?()=>missing(miss):0);
+  const w=items[i],B=mk(w);
+  const cells=[...w.w].map((c,k)=>B.has(k)?`<input class="ml" maxlength="1" data-c="${esc(c)}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Missing letter">`:c===' '?'<span class="sp"></span>':`<span class="ch">${esc(c)}</span>`).join('');
+  app.innerHTML=`<div class="top"><button class="back" id="m">← Menu</button><span>${i+1} / ${items.length} · Score ${score}</span></div><div class="bar"><div style="width:${i/items.length*100}%"></div></div>
+  <div class="q"><small>Fill in the missing letters</small><p>${esc(w.d)}</p>${w.p?`<div class="meta" style="justify-content:flex-start"><span class="pos">${esc(w.p)}</span></div>`:''}</div>
+  <div class="word">${cells}</div><div class="row" style="margin-top:0">${w.vi?'<button class="btn ghost" id="h">Hint</button>':''}<button class="btn" id="c">Check</button></div><div class="fb" id="fb" aria-live="polite"></div><div class="row" id="nx" hidden><button class="btn" id="n">Next →</button></div>`;
+  $('#m').onclick=menu;
+  const ins=[...app.querySelectorAll('.ml')];let locked=false;
+  const chk=()=>{if(locked)return;if(ins.some(x=>!x.value.trim())){$('#fb').className='fb';$('#fb').textContent='Please fill in every gap.';return}
+   locked=true;let ok=true;ins.forEach(x=>{const r=norm(x.value)===norm(x.dataset.c);x.classList.add(r?'ok':'bad');x.disabled=true;if(!r)ok=false});
+   if(ok)score++;else miss.push(w);$('#c').disabled=true;if($('#h'))$('#h').disabled=true;$('#fb').className='fb '+(ok?'ok':'bad');$('#fb').textContent=ok?'Correct! ✨':'The answer is: '+w.w;$('#nx').hidden=false;$('#n').focus();$('#n').onclick=()=>{i++;show()}};
+  ins.forEach((el,k)=>{el.oninput=()=>{if(el.value&&ins[k+1])ins[k+1].focus()};el.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();chk()}else if(e.key==='Backspace'&&!el.value&&ins[k-1])ins[k-1].focus()}});
+  if(ins[0])ins[0].focus();
+  $('#c').onclick=chk;
+  if($('#h'))$('#h').onclick=()=>{$('#fb').className='fb';$('#fb').textContent='Vietnamese: '+w.vi};
+ };
+ show();
+}
+function done(s,n,miss,title,again){logRes(s,n,miss);
+ const pct=Math.round(s/n*100);
+ app.innerHTML=`<div class="center"><div style="font-size:34px">🎁</div><h2 style="margin:6px 0">${title}</h2><div class="score">${s}<span style="font-size:24px;color:var(--mut)"> / ${n}</span></div><p class="sub">${pct>=80?'Wonderful work!':pct>=50?'Nice effort — keep going!':'Every word counts. Try again!'}</p>
+ ${miss.length?`<div class="fmt" style="text-align:left"><b style="color:var(--ink)">Review these words</b><br>${miss.map(w=>`<div><b style="color:var(--grn)">${esc(w.w)}</b> — ${esc(w.d)}</div>`).join('')}</div>`:''}
+ <div class="row">${again?`<button class="btn" id="ag">Review ${miss.length} missed word${miss.length>1?'s':''}</button>`:''}<button class="btn ghost" id="m">Back to menu</button></div></div>`;
+ $('#m').onclick=menu;if(again)$('#ag').onclick=again;
+}
+let sample=null;
+if(window.claude){claude.use('db').then(d=>{db=d;if(!d){if(list)app.innerHTML='<div class="center"><div class="ico">🔒</div><p class="sub">Please sign in to claude.ai to open this vocabulary list.</p></div>';return}if(list&&!words.length)fromList(list);else if($('#re'))menu()}).catch(()=>{});claude.use('user').then(async u=>{if(u){uid=await u.id();isT=await u.canEdit();if($('#re'))menu();else if($('#dz'))home()}}).catch(()=>{})}
+if(window.claude)claude.use('sample').then(s=>{sample=s;if($('#re'))menu()}).catch(()=>{});
+async function sentMode(){
+ const pool=shuf(words);let items=[];
+ app.innerHTML='<div class="center"><div class="ico">🎁</div><p class="sub">Writing your B1+ questions…</p></div>';
+ for(let k=0;k<pool.length;k+=25){const part=pool.slice(k,k+25);app.querySelector('.sub').textContent='Writing your B1+ questions… '+Math.min(k+25,pool.length)+' / '+pool.length;
+ try{
+  const r=await sample.json('You are an experienced English teacher. For EACH target word below, write ONE fill-in-the-blank sentence at B1+ level (upper-intermediate, for strong students): 15-25 words, natural, with clear context clues so that only the target word fits. Use the target word EXACTLY as given (do not change its form) and replace it with _____ . Also add "why": one short English sentence explaining the clue. Return ONLY a JSON array like [{"word":"","sentence":"","why":""}]. Words: '+JSON.stringify(part.map(w=>({word:w.w,pos:w.p||'',definition:w.d}))));
+  items.push(...part.map(w=>{const o=(Array.isArray(r)?r:[]).find(x=>x&&norm(x.word)===norm(w.w));return o&&/_{3,}/.test(o.sentence||'')?{...w,b:o.sentence.replace(/_{3,}/g,'_____'),why:o.why||''}:null}).filter(Boolean));
+ }catch(_){break}}
+ {const have=new Set(items.map(x=>x.w));items=items.concat(words.filter(w=>w.b&&!have.has(w.w)))}
+ if(items.length<3){app.innerHTML='<div class="center"><p class="sub">We couldn’t write questions right now. Please try again.</p><div class="row"><button class="btn ghost" id="m">Back to menu</button></div></div>';$('#m').onclick=menu;return}
+ quiz('sent',items);
+}
+document.addEventListener('keydown',e=>{const fc=$('#fc');if(fc&&e.code==='Space'){e.preventDefault();fc.click()}});
+const sn=$('#snow');for(let k=0;k<32;k++){const s=document.createElement('i'),z=10+Math.random()*12;s.textContent=['❄','❅','❆'][k%3];s.style.cssText=`left:${Math.random()*100}%;font-size:${z}px;animation-duration:${12+Math.random()*14}s;animation-delay:-${Math.random()*20}s`;sn.appendChild(s)}
+for(let k=0;k<20;k++){const b=document.createElement('i');b.style.animationDelay=(k%5)*.5+'s';$('#lt').appendChild(b)}
+{const d=Math.ceil((new Date(2026,11,25)-new Date())/864e5);$('#cd').textContent=d>1?'🎅 '+d+' days until Christmas':d===1?'🎅 Christmas is tomorrow!':d===0?'🎅 Merry Christmas!':'🎄 Happy holidays!'}
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(db&&okSlug(h)&&h!==list)fromList(h)});
+if(PRE){words=mkWords(PRE.words);menu()}else home();
+
+{
+const NF={C:261.63,D:293.66,E:329.63,F:349.23,G:392};
+const T=[['E',1],['E',1],['E',2],['E',1],['E',1],['E',2],['E',1],['G',1],['C',1.5],['D',.5],['E',4],
+['F',1],['F',1],['F',1.5],['F',.5],['F',1],['E',1],['E',1],['E',.5],['E',.5],['E',1],['D',1],['D',1],['E',1],['D',2],['G',2],
+['E',1],['E',1],['E',2],['E',1],['E',1],['E',2],['E',1],['G',1],['C',1.5],['D',.5],['E',4],
+['F',1],['F',1],['F',1.5],['F',.5],['F',1],['E',1],['E',1],['E',.5],['E',.5],['G',1],['G',1],['F',1],['D',1],['C',4]];
+let ac=null,mg=null,tm=null,playing=false,on=true,armed=false;
+const bell=(f,t,d)=>{[[f,1,'sine'],[f*2,.35,'triangle'],[f*3.01,.15,'sine']].forEach(([fr,v,ty])=>{const o=ac.createOscillator(),g=ac.createGain(),e=t+Math.max(d,.25)+.35;o.type=ty;o.frequency.value=fr;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.01);g.gain.exponentialRampToValueAtTime(.001,e);o.connect(g);g.connect(mg);o.start(t);o.stop(e+.05)})};
+const start=()=>{if(playing||!on)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume&&ac.resume()}catch(_){return}
+ playing=true;mg=ac.createGain();mg.gain.value=.12;mg.connect(ac.destination);
+ const loop=()=>{if(!playing)return;let t=ac.currentTime+.15;const beat=.36;T.forEach(([n,d])=>{bell(NF[n],t,d*beat);t+=d*beat});tm=setTimeout(loop,(t-ac.currentTime+1.5)*1000)};loop()};
+const stop=()=>{if(!playing)return;playing=false;clearTimeout(tm);try{const g=mg;g.gain.setTargetAtTime(0,ac.currentTime,.05);setTimeout(()=>g.disconnect(),400)}catch(_){}};
+const btn=document.createElement('button');btn.className='mt';btn.hidden=true;document.body.appendChild(btn);
+const lab=()=>{btn.textContent=on?'🎵 Jingle Bells: on':'🔇 Jingle Bells: off'};lab();
+btn.onclick=()=>{on=!on;lab();if(on){armed=true;start()}else stop()};
+document.addEventListener('pointerdown',e=>{armed=true;if(!e.target.closest('.mode,.mt')&&$('#re'))start()});
+document.addEventListener('keydown',()=>{armed=true});
+setInterval(()=>{const m=!!$('#re');btn.hidden=!m;if(m&&on&&armed)start();else if(!m)stop()},400);
+}
+</script>
+
+<iframe id="nl-badge-frame" title="Powered by Netlify" srcdoc="&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;color-scheme&quot; content=&quot;dark&quot;&gt;&lt;style&gt;
+    :root{--nl-vw:1366px;--nl-vh:633px}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:transparent;overflow:hidden}
+    body{display:flex;align-items:flex-end;justify-content:flex-end;height:100vh;
+      padding:8px 18px 18px 8px;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;color:#f4f9f9;-webkit-font-smoothing:antialiased}
+    .nl-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:10px;width:max-content;max-width:calc(var(--nl-vw,100vw) - 26px)}
+    button{font-family:inherit;cursor:pointer}
+    :focus-visible{outline:2px solid #32e6e2;outline-offset:2px;border-radius:6px}
+    .nl-icon-btn{position:relative;flex:none;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid transparent;background:transparent;color:#d5e3e6;transition:background .15s ease,color .15s ease}
+    .nl-icon-btn:hover{background:rgba(255,255,255,0.08);color:#f4f9f9}
+    .nl-tap::after{content:&quot;&quot;;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      width:max(100%,44px);height:max(100%,44px)}
+    @keyframes nl-rise{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+    @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition:none!important}}
+  
+      .nl-card{position:relative;display:none;width:min(340px,calc(var(--nl-vw,100vw) - 26px));max-height:calc(var(--nl-vh,100vh) - 84px);overflow-y:auto;background:linear-gradient(180deg,#132832 0%,#0e1e25 100%);border:1px solid rgba(255,255,255,0.09);border-radius:18px;padding:18px;transform-origin:bottom right;animation:nl-rise .3s cubic-bezier(.34,1.4,.4,1) both}
+      .nl-card.open{display:block}
+      .nl-card-close{position:absolute;top:10px;right:10px}
+      .nl-card h2{margin:0;padding-right:30px;font-size:16px;font-weight:750;letter-spacing:-0.015em;line-height:1.35}
+      .nl-card h2 em{font-style:normal;background:linear-gradient(90deg,#32e6e2,#4d7cfe,#9a6bff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+      .nl-card p{margin:8px 0 0;font-size:12.5px;color:#d5e3e6}
+      .nl-prompt{position:relative;margin-top:14px;background:#10222b;border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:10px 12px;transition:border-color .15s ease,box-shadow .15s ease}
+      .nl-prompt:focus-within{border-color:#05bdba;box-shadow:0 0 0 3px rgba(5,189,186,0.18)}
+      .nl-prompt textarea{display:block;width:100%;height:38px;resize:none;border:0;outline:none;background:transparent;color:#f4f9f9;font:inherit;font-size:13px;line-height:19px;padding:0 28px 0 0}
+      .nl-prompt textarea::placeholder{color:#a9bdc2}
+      .nl-send{position:absolute;right:9px;bottom:9px;width:24px;height:24px;flex:none;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:50%;background:#05bdba;color:#02191b;transition:background .15s ease}
+      .nl-send:hover{background:#32e6e2}
+      @media (pointer: coarse){
+        .nl-prompt textarea{font-size:16px;line-height:21px;height:42px}
+      }
+      .nl-or{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:10.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#a9bdc2}
+      .nl-or::before,.nl-or::after{content:&quot;&quot;;flex:1;height:1px;background:rgba(255,255,255,0.09)}
+      .nl-drop{display:flex;align-items:center;justify-content:space-between;gap:6px;text-decoration:none;background:#1b3a45;border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:10px 12px;font-size:13px;font-weight:600;color:#cfe0e3;transition:background .15s ease,color .15s ease,border-color .15s ease}
+      .nl-drop:hover{background:#224753;color:#f4f9f9;border-color:rgba(50,230,226,0.3)}
+      .nl-drop .nl-arrow{transition:transform .18s cubic-bezier(.34,1.4,.4,1)}
+      .nl-drop:hover .nl-arrow{transform:translateX(3px)}
+      .nl-badge{display:flex;align-items:center;gap:9px;white-space:nowrap;border:1px solid rgba(255,255,255,0.09);background:linear-gradient(180deg,#142b34,#0e1e25);color:#f4f9f9;border-radius:999px;padding:9px 14px 9px 11px;font-size:13px;font-weight:600;letter-spacing:0.01em;transition:border-color .2s ease}
+      .nl-badge:hover{border-color:rgba(50,230,226,0.26)}
+      .nl-hide{display:block;width:100%;margin-top:10px;border:0;background:transparent;color:#a9bdc2;font-size:11.5px;font-weight:600;padding:4px;border-radius:8px;transition:color .15s ease}
+      .nl-hide:hover{color:#d5e3e6;text-decoration:underline}
+      .nl-badge-label{color:#d5e3e6;font-weight:500}
+      .nl-badge-brand{font-weight:750}
+    &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+      &lt;div class=&quot;nl-wrap&quot;&gt;
+        &lt;section class=&quot;nl-card&quot; id=&quot;nl-card&quot; aria-label=&quot;Build your own site on Netlify&quot;&gt;
+          &lt;button type=&quot;button&quot; class=&quot;nl-icon-btn nl-tap nl-card-close&quot; id=&quot;nl-card-close&quot; aria-label=&quot;Close&quot;&gt;&lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.9&quot; stroke-linecap=&quot;round&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
+          &lt;h2&gt;&lt;em&gt;Build your own site with Netlify&lt;/em&gt;&lt;/h2&gt;
+          &lt;p&gt;Describe what you want, and an AI agent designs, builds and deploys it in minutes.&lt;/p&gt;
+          &lt;form class=&quot;nl-prompt&quot; action=&quot;https://app.netlify.com/start&quot; method=&quot;get&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+            &lt;textarea name=&quot;prompt&quot; rows=&quot;2&quot; required maxlength=&quot;300&quot; autocomplete=&quot;off&quot;
+                      enterkeyhint=&quot;go&quot;
+                      placeholder=&quot;A shop for my handmade surfboards&amp;hellip;&quot;
+                      aria-label=&quot;Describe the site you want to build&quot;&gt;&lt;/textarea&gt;
+            &lt;button type=&quot;submit&quot; class=&quot;nl-send nl-tap&quot; aria-label=&quot;Build this site&quot;&gt;&lt;svg width=&quot;13&quot; height=&quot;13&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M8 12.75v-9.5M3.9 7.35 8 3.25l4.1 4.1&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
+            &lt;input type=&quot;hidden&quot; name=&quot;utm_source&quot; value=&quot;netlify_badge&quot;&gt;
+            &lt;input type=&quot;hidden&quot; name=&quot;utm_campaign&quot; value=&quot;loops&quot;&gt;
+            &lt;input type=&quot;hidden&quot; name=&quot;utm_medium&quot; value=&quot;owned&quot;&gt;
+            &lt;input type=&quot;hidden&quot; name=&quot;utm_content&quot; value=&quot;prompt&quot;&gt;
+            &lt;input type=&quot;hidden&quot; name=&quot;utm_id&quot; value=&quot;1f4b59a2-8930-4396-b6ba-4efee4b01461&quot;&gt;
+            
+          &lt;/form&gt;
+          &lt;div class=&quot;nl-or&quot;&gt;&lt;span&gt;or&lt;/span&gt;&lt;/div&gt;
+          &lt;a class=&quot;nl-drop&quot; href=&quot;https://app.netlify.com/drop?utm_source=netlify_badge&amp;utm_campaign=loops&amp;utm_medium=owned&amp;utm_content=drop&amp;utm_id=1f4b59a2-8930-4396-b6ba-4efee4b01461&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+            &lt;span&gt;Drop a site you already have&lt;/span&gt;&lt;span class=&quot;nl-arrow&quot; aria-hidden=&quot;true&quot;&gt;&amp;rarr;&lt;/span&gt;
+          &lt;/a&gt;
+          
+        &lt;/section&gt;
+        &lt;button type=&quot;button&quot; class=&quot;nl-badge&quot; id=&quot;nl-badge&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;nl-card&quot;
+                aria-label=&quot;Powered by Netlify — build your own site&quot;&gt;
+          &lt;svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;-45.625 -47.625 456.25 456.25&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;
+    &lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M122.608 207.222V298.975C122.608 301.415 123.574 303.775 125.317 305.518L177.467 357.668C181.06 361.261 186.932 361.261 190.525 357.668L232.675 315.519C236.268 311.926 236.268 306.053 232.675 302.434L133.119 202.878C129.231 198.99 122.608 201.726 122.608 207.222Z&quot; fill=&quot;white&quot;/&gt;
+    &lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M232.675 44.8449L190.525 2.69468C186.932 -0.898228 181.06 -0.898228 177.467 2.69468L125.317 54.846C123.574 56.5889 122.608 58.922 122.608 61.362V153.115C122.608 158.584 129.231 161.346 133.119 157.459L232.675 57.9031C236.268 54.3101 236.268 48.4385 232.675 44.8187V44.8449Z&quot; fill=&quot;white&quot;/&gt;
+    &lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M307.482 126.543L151.056 174.243C145.238 176.012 145.238 184.243 151.056 186.013L307.482 233.713C310.726 234.705 314.319 233.82 316.706 231.407L361.483 186.629C365.076 183.036 365.076 177.165 361.483 173.545L316.706 128.767C314.292 126.354 310.753 125.469 307.482 126.462V126.515V126.543Z&quot; fill=&quot;white&quot;/&gt;
+    &lt;path d=&quot;M48.6878 131.481L6.52195 173.647C2.91992 177.249 2.91992 183.089 6.52195 186.691L48.6883 228.857C52.2903 232.459 58.1302 232.459 61.7322 228.857L103.898 186.691C107.5 183.089 107.5 177.249 103.898 173.647L61.7317 131.481C58.1297 127.879 52.2899 127.879 48.6878 131.481Z&quot; fill=&quot;white&quot;/&gt;&lt;/svg&gt;
+          &lt;span&gt;&lt;span class=&quot;nl-badge-label&quot;&gt;Powered by&lt;/span&gt; &lt;span class=&quot;nl-badge-brand&quot;&gt;Netlify&lt;/span&gt;&lt;/span&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+      &lt;script&gt;
+        
+    function nlSend(){
+      var wrap=document.querySelector('.nl-wrap'),boxes=[];
+      for(var i=0;i&lt;wrap.children.length;i++){
+        var c=wrap.children[i];
+        if(!c.offsetWidth||!c.offsetHeight)continue;
+        boxes.push({x:c.offsetLeft-wrap.offsetLeft+8,
+                    y:c.offsetTop-wrap.offsetTop+8,
+                    w:c.offsetWidth,h:c.offsetHeight});
+      }
+      parent.postMessage({nlHud:'resize',
+        width:wrap.offsetWidth+26,
+        height:wrap.offsetHeight+26,
+        boxes:boxes},'*');
+    }
+    function nlSendSoon(){requestAnimationFrame(nlSend);}
+    window.addEventListener('load',nlSend);
+    window.addEventListener('message',function(e){
+      if(e.source!==parent||!e.data||e.data.nlHud!=='viewport')return;
+      var s=document.documentElement.style;
+      s.setProperty('--nl-vw',e.data.w+'px');
+      s.setProperty('--nl-vh',e.data.h+'px');
+      document.documentElement.classList.toggle('nl-narrow',e.data.w&lt;600);
+      nlSendSoon();
+    });
+    var nlCoarse=window.matchMedia('(pointer: coarse)').matches;
+    function nlSubmit(form){
+      if(form.requestSubmit)return form.requestSubmit();
+      if(form.checkValidity&amp;&amp;!form.checkValidity())
+        return form.reportValidity&amp;&amp;form.reportValidity();
+      form.submit();
+    }
+  
+        var badge=document.getElementById('nl-badge'),card=document.getElementById('nl-card'),
+            box=card.querySelector('textarea');
+        function setOpen(open){
+          card.classList.toggle('open',open);
+          badge.setAttribute('aria-expanded',open?'true':'false');
+          nlSendSoon();
+          if(open&amp;&amp;!nlCoarse)box.focus();
+        }
+        box.addEventListener('keydown',function(e){
+          if(e.key==='Enter'&amp;&amp;!e.shiftKey){e.preventDefault();nlSubmit(box.form);}
+        });
+        badge.addEventListener('click',function(){setOpen(!card.classList.contains('open'));});
+        document.getElementById('nl-card-close').addEventListener('click',function(){setOpen(false);badge.focus();});
+        document.addEventListener('keydown',function(e){
+          if(e.key==='Escape'&amp;&amp;card.classList.contains('open')){setOpen(false);badge.focus();}
+        });
+        card.addEventListener('click',function(e){
+          if(e.target.closest('#nl-hide'))parent.postMessage({nlHud:'state',value:'hidden'},'*');
+        });
+      &lt;/script&gt;
+    &lt;/body&gt;&lt;/html&gt;" style="position: fixed; bottom: 0px; right: 0px; border: 0px; margin: 0px; padding: 0px; background: transparent; color-scheme: dark; z-index: 2147483645; width: 197px; height: 64px; clip-path: path(&quot;M 3 3 H 184 V 51 H 3 Z&quot;);" data-nl-ready="1"></iframe></body></html>
